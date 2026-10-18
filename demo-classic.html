@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Mar Salado Guest Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column like a phone guide; sticky bar with language + section chips; one highlighted Wi-Fi card */
+:root{
+  --bg:#FAF6F5; --surface:#FFFFFF; --ink:#1E2932; --muted:#5D6A73; --line:#E6DEDC;
+  --lagoon:#C9707F; --lagoon-soft:#F6E3E6; --sea:#1C5866; --sea-soft:#E1EEF0;
+  --bin-yellow:#E9B824; --bin-blue:#2F6FB5; --bin-green:#3E8E4F; --bin-grey:#6E7479;
+  --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12181C; --surface:#1A2228; --ink:#ECE7E5; --muted:#A3ADB3; --line:#2B353C;
+  --lagoon:#E8A2AE; --lagoon-soft:#3A2429; --sea:#79BCCB; --sea-soft:#17323A;
+  --bin-yellow:#E9C14A; --bin-blue:#6C9FDB; --bin-green:#6CB67C; --bin-grey:#9AA0A5; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12181C; --surface:#1A2228; --ink:#ECE7E5; --muted:#A3ADB3; --line:#2B353C;
+  --lagoon:#E8A2AE; --lagoon-soft:#3A2429; --sea:#79BCCB; --sea-soft:#17323A;
+  --bin-yellow:#E9C14A; --bin-blue:#6C9FDB; --bin-green:#6CB67C; --bin-grey:#9AA0A5; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:680px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--sea)}
+:focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:4px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;flex-direction:column;gap:8px;padding-block:10px}
+.langs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;align-self:flex-end}
+.langs button{font:500 13px/1 var(--f-body);padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;letter-spacing:.04em}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -4px;padding:0 4px}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex:none;font-size:14px;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;white-space:nowrap}
+
+header.hero{padding-block:28px 8px;display:flex;flex-direction:column;gap:14px}
+.demo{align-self:flex-start;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--lagoon);font-weight:600}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,7vw,40px);line-height:1.08;margin:0;text-wrap:balance}
+.addr{font-family:var(--f-mono);font-size:14px;color:var(--muted);margin:0}
+.times{display:flex;flex-wrap:wrap;gap:8px}
+.time{display:flex;flex-direction:column;padding:10px 14px;border-radius:12px;background:var(--sea-soft);min-width:130px}
+.time small{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.time b{font-family:var(--f-mono);font-size:20px;color:var(--sea);font-variant-numeric:tabular-nums}
+
+.wifi{margin-top:18px;padding:18px;border-radius:16px;background:var(--lagoon-soft);display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center}
+.wifi h2{grid-column:1/-1;margin:0;font:600 13px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--lagoon)}
+.wifi dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;min-width:0}
+.wifi dt{color:var(--muted);font-size:14px}
+.wifi dd{margin:0;font-family:var(--f-mono);font-size:17px;overflow-wrap:anywhere}
+.btn{font:600 14px/1 var(--f-body);padding:12px 16px;border-radius:10px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}
+.note{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)}
+
+section{padding-block:28px 6px;scroll-margin-top:120px}
+section h2{font-family:var(--f-display);font-weight:500;font-size:22px;margin:0 0 12px}
+.intro{margin:0 0 10px;color:var(--muted)}
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.list li{padding:12px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+ul.list li:last-child{border-bottom:1px solid var(--line)}
+ul.list b{font-weight:600}
+ul.list span{color:var(--muted);font-size:15px}
+
+.bins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bin{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.bin i{flex:none;width:18px;height:24px;border-radius:4px 4px 6px 6px;margin-top:2px}
+.bin div{display:flex;flex-direction:column;min-width:0}
+.bin span{font-size:14px;color:var(--muted)}
+
+.check label{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}
+.check label:last-child{border-bottom:1px solid var(--line)}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--sea);flex:none}
+.check input:checked+span{color:var(--muted);text-decoration:line-through}
+
+.places{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:10px}
+.place{padding:14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.place span{font-size:15px;color:var(--muted)}
+.slot{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--lagoon)}
+.place .links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px}
+.place .links a{font-size:14px;font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
+
+.sos li b{font-family:var(--f-mono);font-size:18px;color:var(--lagoon)}
+.maplink{align-self:flex-start;margin-top:4px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
+
+.extras{margin-top:28px;padding:18px;border-radius:16px;border:1px dashed var(--sea);display:flex;flex-direction:column;gap:12px}
+.extras h2{font-family:var(--f-display);font-weight:500;font-size:20px;margin:0}
+.extra{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.extra b{font-family:var(--f-mono);color:var(--sea);font-variant-numeric:tabular-nums}
+.host{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding-top:6px;border-top:1px solid var(--line)}
+.host .num{font-family:var(--f-mono);user-select:all}
+footer{padding-block:28px 40px;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.addr-links{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}.addr-links a,.addr-links button{font:600 14px/1.2 var(--f-body);color:var(--sea);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+</style>
+
+<div class="bar"><div class="wrap">
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" data-l="en">EN</button><button type="button" data-l="es">ES</button><button type="button" data-l="ru">RU</button><button type="button" data-l="uk">UK</button><button type="button" data-l="pl">PL</button><button type="button" data-l="fr">FR</button><button type="button" data-l="nl">NL</button><button type="button" data-l="sv">SV</button>
+  </div>
+  <nav class="chips" id="chips"></nav>
+</div></div>
+
+<main class="wrap" id="app"></main>
+
+<script>
+const APT = {
+  name: "Apartamento Mar Salado",
+  addr: "Calle de las Salinas, 12 · 3ºB · 03181 Torrevieja",
+  checkin: "16:00", checkout: "11:00",
+  wifi: { ssid: "MarSalado_5G", pass: "playa2026" },
+  host: { name: "Anna", phone: "+34 600 000 000", wa: "34600000000" },
+  extras: [ ["transfer", "45 €"], ["late", "20 €"], ["bike", "10 €"] ]
+};
+
+const T = {
+ru:{demo:"Демо-гид для гостей",in:"Заезд с",out:"Выезд до",wifi:"Wi-Fi",net:"Сеть",pw:"Пароль",copy:"Скопировать",copied:"Скопировано",
+codes:"Код от двери и сейфа с ключами я пришлю в WhatsApp в день заезда, чтобы он был под рукой, когда вы подъедете.",
+nav:{arrive:"Заселение",home:"Квартира",bins:"Мусор",rules:"О доме",leave:"Выезд",near:"Рядом",road:"Дорога",sos:"Экстренно"},
+arrive:[["Вход","Синяя калитка со стороны улицы, дальше лифт на 3-й этаж."],["Ключи","Сейф справа от двери квартиры, код придёт в WhatsApp."],["Парковка","Бесплатные места прямо на улице у дома."]],
+home:[["Кондиционер","Пульт лежит в ящике тумбы у телевизора. Heat — тепло, Cool — прохлада."],["Горячая вода","Бойлер в ванной всегда включён. После долгого душа горячая вода снова набирается за 30–40 минут."],["Кухня","Индукционная плита греет быстро, вся посуда в шкафу под ней для неё подходит."],["Стиральная машина","Капсулы ждут под раковиной. Программа 40° занимает около часа."],["Для пляжа","Зонт, 2 шезлонга и отдельные пляжные полотенца лежат в шкафу в коридоре."]],
+binsIntro:"Контейнеры совсем рядом: на углу, 30 метров направо от подъезда.",
+bins:[["yellow","Жёлтый","пластик, банки, тетрапак"],["blue","Синий","бумага и картон"],["green","Зелёный колокол","стекло"],["grey","Серый","всё остальное"]],
+rules:[["Тишина","Просьба соблюдать тишину с 23:00 до 8:00."],["Балкон","На балконе есть столик и пепельница, это любимое место гостей для вечернего бокала."],["Бассейн","Общий бассейн открыт с 10:00 до 21:00. Пластиковые стаканы для напитков у воды лежат на кухне."],["Ваша компания","Квартира рассчитана на 4 гостей. Если к вам кто-то присоединится, просто напишите мне, и я по возможности оформлю для вас дополнительное место."]],
+leaveIntro:"Пожалуйста, перед выездом:",leave:["Выключите кондиционер и свет","Закройте окна и балконную дверь","Отнесите мусор в контейнеры на углу","Оставьте ключи в сейфе и напишите мне. Буду рада вашему отзыву!"],
+mapT:"Открыть на карте",guardT:"Дежурные аптеки",near:[["Playa del Cura", "Центральный пляж с набережной и кафе. Около 10 минут пешком.", "Playa del Cura, Torrevieja"], ["Playa de los Locos", "Небольшая бухта с прозрачной водой, любимое место семей с детьми.", "Playa de los Locos, Torrevieja"], ["Розовое озеро", "Laguna Salada de Torrevieja особенно красива на закате. Вокруг природный парк с тропами для прогулок.", "Laguna Salada de Torrevieja"], ["Paseo del Mar", "Новый центр отдыха у порта, открыт летом 2026 года: 27 ресторанов и площадок с видом на море, подземная парковка.", "Paseo del Mar, Dique de Levante, Torrevieja"], ["ТЦ Habaneras", "Торговый центр с магазинами и ресторанами на въезде в город.", "Centro Comercial Habaneras, Torrevieja"], ["Mercadona", "Около 5 минут пешком. Работает с понедельника по субботу с 9:00 до 21:30.", "Mercadona Torrevieja"], ["Аптеки", "Ближайшие аптеки на карте. Аптеки, открытые ночью, — по ссылке «Дежурные аптеки».", "farmacia Torrevieja centro"]],
+road:[["Аэропорт Аликанте (ALC)","Около 45 минут на машине."],["Аэропорт Мурсии (RMU)","Около 50 минут на машине."],["Трансфер","С радостью закажу встречу в аэропорту с табличкой, см. ниже."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Единый экстренный номер. Отвечают в том числе по-английски."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, неотложка круглосуточно.","Hospital Universitario de Torrevieja"]],
+extrasT:"Можно добавить",extras:{transfer:"Трансфер из аэропорта Аликанте",late:"Поздний выезд до 14:00",bike:"Велосипед, в день"},
+hostT:"Хозяйка",hostName:"Анна",hostNote:"Пишите в WhatsApp, я на связи 24 часа. Если не отвечу сама, подключится мой электронный помощник.",wa:"Открыть WhatsApp",
+foot:"Демо-страница: квартира, контакты и цены вымышленные."},
+
+uk:{demo:"Демо-гід для гостей",in:"Заїзд з",out:"Виїзд до",wifi:"Wi-Fi",net:"Мережа",pw:"Пароль",copy:"Скопіювати",copied:"Скопійовано",
+codes:"Код від дверей і сейфа з ключами я надішлю у WhatsApp у день заїзду, щоб він був під рукою, коли ви під'їдете.",
+nav:{arrive:"Заселення",home:"Квартира",bins:"Сміття",rules:"Про будинок",leave:"Виїзд",near:"Поруч",road:"Дорога",sos:"Екстрено"},
+arrive:[["Вхід","Синя хвіртка з боку вулиці, далі ліфт на 3-й поверх."],["Ключі","Сейф праворуч від дверей квартири, код прийде у WhatsApp."],["Паркування","Безкоштовні місця просто на вулиці біля будинку."]],
+home:[["Кондиціонер","Пульт лежить у шухляді тумби біля телевізора. Heat — тепло, Cool — прохолода."],["Гаряча вода","Бойлер у ванній завжди увімкнений. Після довгого душу гаряча вода знову набирається за 30–40 хвилин."],["Кухня","Індукційна плита гріє швидко, увесь посуд у шафі під нею для неї підходить."],["Пральна машина","Капсули чекають під раковиною. Програма 40° триває близько години."],["Для пляжу","Парасолька, 2 шезлонги та окремі пляжні рушники лежать у шафі в коридорі."]],
+binsIntro:"Контейнери зовсім поруч: на розі, 30 метрів праворуч від під'їзду.",
+bins:[["yellow","Жовтий","пластик, банки, тетрапак"],["blue","Синій","папір і картон"],["green","Зелений дзвін","скло"],["grey","Сірий","усе інше"]],
+rules:[["Тиша","Прохання дотримуватися тиші з 23:00 до 8:00."],["Балкон","На балконі є столик і попільничка, це улюблене місце гостей для вечірнього келиха."],["Басейн","Спільний басейн відкритий з 10:00 до 21:00. Пластикові склянки для напоїв біля води лежать на кухні."],["Ваша компанія","Квартира розрахована на 4 гостей. Якщо до вас хтось приєднається, просто напишіть мені, і я за можливості оформлю для вас додаткове місце."]],
+leaveIntro:"Будь ласка, перед виїздом:",leave:["Вимкніть кондиціонер і світло","Зачиніть вікна та балконні двері","Віднесіть сміття до контейнерів на розі","Залиште ключі в сейфі й напишіть мені. Буду рада вашому відгуку!"],
+mapT:"Відкрити на карті",guardT:"Чергові аптеки",near:[["Playa del Cura", "Центральний пляж з набережною та кафе. Близько 10 хвилин пішки.", "Playa del Cura, Torrevieja"], ["Playa de los Locos", "Невелика бухта з прозорою водою, улюблене місце сімей з дітьми.", "Playa de los Locos, Torrevieja"], ["Рожеве озеро", "Laguna Salada de Torrevieja особливо гарна на заході сонця. Навколо природний парк зі стежками для прогулянок.", "Laguna Salada de Torrevieja"], ["Paseo del Mar", "Новий центр відпочинку біля порту, відкритий улітку 2026 року: 27 ресторанів і майданчиків з видом на море, підземний паркінг.", "Paseo del Mar, Dique de Levante, Torrevieja"], ["ТЦ Habaneras", "Торговий центр з магазинами та ресторанами на в'їзді до міста.", "Centro Comercial Habaneras, Torrevieja"], ["Mercadona", "Близько 5 хвилин пішки. Працює з понеділка по суботу з 9:00 до 21:30.", "Mercadona Torrevieja"], ["Аптеки", "Найближчі аптеки на карті. Аптеки, відкриті вночі, — за посиланням «Чергові аптеки».", "farmacia Torrevieja centro"]],
+road:[["Аеропорт Аліканте (ALC)","Близько 45 хвилин автомобілем."],["Аеропорт Мурсії (RMU)","Близько 50 хвилин автомобілем."],["Трансфер","Із радістю замовлю зустріч в аеропорту з табличкою, див. нижче."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Єдиний екстрений номер. Відповідають також англійською."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, невідкладна допомога цілодобово.","Hospital Universitario de Torrevieja"]],
+extrasT:"Можна додати",extras:{transfer:"Трансфер з аеропорту Аліканте",late:"Пізній виїзд до 14:00",bike:"Велосипед, за день"},
+hostT:"Господиня",hostName:"Анна",hostNote:"Пишіть у WhatsApp, я на зв'язку 24 години. Якщо не відповім сама, підключиться мій електронний помічник.",wa:"Відкрити WhatsApp",
+foot:"Демо-сторінка: квартира, контакти та ціни вигадані."},
+
+en:{demo:"Demo guest guide",in:"Check-in from",out:"Check-out by",wifi:"Wi-Fi",net:"Network",pw:"Password",copy:"Copy",copied:"Copied",
+codes:"I'll send the door and key-safe codes by WhatsApp on your arrival day, so they're right at hand when you get here.",
+nav:{arrive:"Arrival",home:"Apartment",bins:"Recycling",rules:"The building",leave:"Check-out",near:"Nearby",road:"Getting here",sos:"Emergency"},
+arrive:[["Entrance","Blue gate on the street side, then the lift to the 3rd floor."],["Keys","Key safe to the right of the apartment door; the code comes by WhatsApp."],["Parking","Free spaces right on the street by the building."]],
+home:[["Air conditioning","The remote is in the TV cabinet drawer. Heat warms, Cool keeps it fresh."],["Hot water","The bathroom boiler is always on. After a long shower, hot water is back in 30–40 minutes."],["Kitchen","The induction hob heats fast, and every pan in the cupboard below works with it."],["Washing machine","Capsules are under the sink. The 40° programme takes about an hour."],["Beach kit","An umbrella, 2 sunbeds and dedicated beach towels are in the hall cupboard."]],
+binsIntro:"The bins are very close: on the corner, 30 metres to the right of the entrance.",
+bins:[["yellow","Yellow","plastic, cans, cartons"],["blue","Blue","paper and cardboard"],["green","Green igloo","glass"],["grey","Grey","everything else"]],
+rules:[["Quiet hours","Please keep the noise down from 23:00 to 8:00."],["Balcony","The balcony has a table and an ashtray, a guest favourite for an evening drink."],["Pool","The shared pool is open 10:00–21:00. You'll find plastic cups for poolside drinks in the kitchen."],["Your group","The apartment sleeps 4. If someone is joining you, just message me and I'll arrange an extra bed where possible."]],
+leaveIntro:"Before you leave, please:",leave:["Switch off the air conditioning and lights","Close the windows and balcony door","Take the rubbish to the bins on the corner","Leave the keys in the safe and message me. I'd love to hear how your stay went!"],
+mapT:"Open in Google Maps",guardT:"On-duty pharmacies",near:[["Playa del Cura", "Town beach with a promenade and cafés. About 10 minutes on foot.", "Playa del Cura, Torrevieja"], ["Playa de los Locos", "Small cove with clear water, a favourite with families.", "Playa de los Locos, Torrevieja"], ["Pink lake", "Laguna Salada de Torrevieja is at its most beautiful at sunset, with walking trails around the natural park.", "Laguna Salada de Torrevieja"], ["Paseo del Mar", "New seafront leisure area by the port, opened in summer 2026: 27 restaurants and venues with sea views, underground parking.", "Paseo del Mar, Dique de Levante, Torrevieja"], ["Habaneras mall", "Shopping centre with shops and restaurants at the entrance to town.", "Centro Comercial Habaneras, Torrevieja"], ["Mercadona", "About 5 minutes on foot. Open Monday to Saturday, 9:00–21:30.", "Mercadona Torrevieja"], ["Pharmacies", "Nearest pharmacies on the map. For pharmacies open at night, use the “On-duty pharmacies” link.", "farmacia Torrevieja centro"]],
+road:[["Alicante airport (ALC)","About 45 minutes by car."],["Murcia airport (RMU)","About 50 minutes by car."],["Transfer","Happy to book a meet-and-greet at the airport for you, see below."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","EU emergency number. English is spoken."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, 24-hour emergency department.","Hospital Universitario de Torrevieja"]],
+extrasT:"Add to your stay",extras:{transfer:"Transfer from Alicante airport",late:"Late check-out until 14:00",bike:"Bicycle, per day"},
+hostT:"Your host",hostName:"Anna",hostNote:"Message me on WhatsApp any time, 24 hours a day. If I can't reply myself, my digital assistant will step in.",wa:"Open WhatsApp",
+foot:"Demo page: the apartment, contacts and prices are fictional."},
+
+es:{demo:"Guía de huéspedes de demostración",in:"Entrada desde",out:"Salida antes de",wifi:"Wi-Fi",net:"Red",pw:"Contraseña",copy:"Copiar",copied:"Copiado",
+codes:"Te enviaré los códigos de la puerta y de la caja de llaves por WhatsApp el día de llegada, para que los tengas a mano al llegar.",
+nav:{arrive:"Llegada",home:"Apartamento",bins:"Reciclaje",rules:"El edificio",leave:"Salida",near:"Cerca",road:"Cómo llegar",sos:"Emergencias"},
+arrive:[["Entrada","Cancela azul por la calle y después ascensor al 3.º piso."],["Llaves","Caja de llaves a la derecha de la puerta; el código llega por WhatsApp."],["Aparcamiento","Plazas gratuitas en la misma calle, junto al edificio."]],
+home:[["Aire acondicionado","El mando está en el cajón del mueble de la tele. Heat calienta, Cool refresca."],["Agua caliente","El termo del baño está siempre encendido. Tras una ducha larga, el agua caliente vuelve en 30–40 minutos."],["Cocina","La placa de inducción calienta rápido y todo el menaje del armario de abajo sirve para ella."],["Lavadora","Las cápsulas están bajo el fregadero. El programa de 40° dura una hora aprox."],["Para la playa","Sombrilla, 2 tumbonas y toallas de playa propias en el armario del pasillo."]],
+binsIntro:"Los contenedores están muy cerca: en la esquina, 30 metros a la derecha del portal.",
+bins:[["yellow","Amarillo","envases, latas, bricks"],["blue","Azul","papel y cartón"],["green","Iglú verde","vidrio"],["grey","Gris","resto"]],
+rules:[["Silencio","Por favor, respeta el descanso de 23:00 a 8:00."],["Balcón","El balcón tiene mesita y cenicero, el rincón favorito de los huéspedes para tomar algo por la noche."],["Piscina","La piscina comunitaria abre de 10:00 a 21:00. En la cocina hay vasos de plástico para las bebidas junto al agua."],["Tu grupo","El apartamento es para 4 personas. Si se une alguien más, escríbeme y, si es posible, preparo una cama adicional."]],
+leaveIntro:"Antes de salir, por favor:",leave:["Apaga el aire acondicionado y las luces","Cierra ventanas y puerta del balcón","Lleva la basura a los contenedores de la esquina","Deja las llaves en la caja y escríbeme. ¡Me encantará saber qué tal la estancia!"],
+mapT:"Abrir en el mapa",guardT:"Farmacias de guardia",near:[["Playa del Cura", "Playa urbana con paseo y cafeterías. Unos 10 minutos a pie.", "Playa del Cura, Torrevieja"], ["Playa de los Locos", "Cala pequeña de agua clara, la favorita de las familias.", "Playa de los Locos, Torrevieja"], ["Laguna rosa", "La Laguna Salada de Torrevieja luce especialmente al atardecer, con senderos por el parque natural.", "Laguna Salada de Torrevieja"], ["Paseo del Mar", "Nuevo espacio de ocio junto al puerto, inaugurado en verano de 2026: 27 restaurantes y locales con vistas al mar y parking subterráneo.", "Paseo del Mar, Dique de Levante, Torrevieja"], ["C.C. Habaneras", "Centro comercial con tiendas y restaurantes a la entrada de la ciudad.", "Centro Comercial Habaneras, Torrevieja"], ["Mercadona", "Unos 5 minutos a pie. Abre de lunes a sábado de 9:00 a 21:30.", "Mercadona Torrevieja"], ["Farmacias", "Farmacias más cercanas en el mapa. Para las abiertas de noche, usa el enlace «Farmacias de guardia».", "farmacia Torrevieja centro"]],
+road:[["Aeropuerto de Alicante (ALC)","Unos 45 minutos en coche."],["Aeropuerto de Murcia (RMU)","Unos 50 minutos en coche."],["Traslado","Con gusto te reservo la recogida en el aeropuerto con cartel, ver abajo."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Número único de emergencias. Atienden también en inglés."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, urgencias 24 horas.","Hospital Universitario de Torrevieja"]],
+extrasT:"Puedes añadir",extras:{transfer:"Traslado desde el aeropuerto de Alicante",late:"Salida tardía hasta las 14:00",bike:"Bicicleta, por día"},
+hostT:"Anfitriona",hostName:"Anna",hostNote:"Escríbeme por WhatsApp a cualquier hora, las 24 horas. Si no puedo responder yo, te atenderá mi asistente virtual.",wa:"Abrir WhatsApp",
+foot:"Página de demostración: apartamento, contactos y precios ficticios."},
+pl:{demo:"Demo przewodnika dla gości",in:"Zameldowanie od",out:"Wymeldowanie do",wifi:"Wi-Fi",net:"Sieć",pw:"Hasło",copy:"Kopiuj",copied:"Skopiowano",
+codes:"Kody do drzwi i sejfu na klucze wyślę na WhatsApp w dniu przyjazdu, żeby mieli je Państwo pod ręką po dotarciu na miejsce.",
+nav:{arrive:"Przyjazd",home:"Apartament",bins:"Segregacja",rules:"Budynek",leave:"Wyjazd",near:"W pobliżu",road:"Dojazd",sos:"Pomoc"},
+arrive:[["Wejście","Niebieska furtka od strony ulicy, dalej winda na 3. piętro."],["Klucze","Sejf na klucze po prawej stronie drzwi apartamentu, kod przyjdzie na WhatsApp."],["Parking","Bezpłatne miejsca na ulicy tuż przy budynku."]],
+home:[["Klimatyzacja","Pilot leży w szufladzie szafki pod telewizorem. Heat grzeje, Cool chłodzi."],["Ciepła woda","Bojler w łazience jest zawsze włączony. Po długim prysznicu ciepła woda wraca po 30–40 minutach."],["Kuchnia","Płyta indukcyjna nagrzewa się szybko, a wszystkie garnki z szafki pod nią do niej pasują."],["Pralka","Kapsułki są pod zlewem. Program 40° trwa około godziny."],["Na plażę","Parasol, 2 leżaki i osobne ręczniki plażowe są w szafie w przedpokoju."]],
+binsIntro:"Kontenery są bardzo blisko: na rogu, 30 metrów w prawo od wejścia.",
+bins:[["yellow","Żółty","plastik, puszki, kartony po napojach"],["blue","Niebieski","papier i karton"],["green","Zielony dzwon","szkło"],["grey","Szary","pozostałe"]],
+rules:[["Cisza nocna","Prosimy o zachowanie ciszy od 23:00 do 8:00."],["Balkon","Na balkonie jest stolik i popielniczka, ulubione miejsce gości na wieczorny kieliszek."],["Basen","Wspólny basen jest czynny od 10:00 do 21:00. Plastikowe kubki na napoje przy basenie są w kuchni."],["Państwa grupa","Apartament jest dla 4 osób. Jeśli ktoś do Państwa dołączy, proszę do mnie napisać, a w miarę możliwości przygotuję dodatkowe miejsce."]],
+leaveIntro:"Przed wyjazdem prosimy:",leave:["Wyłączyć klimatyzację i światło","Zamknąć okna i drzwi balkonowe","Wynieść śmieci do kontenerów na rogu","Zostawić klucze w sejfie i napisać do mnie. Chętnie przeczytam, jak minął pobyt!"],
+mapT:"Otwórz na mapie",guardT:"Apteki dyżurne",near:[["Playa del Cura","Miejska plaża z promenadą i kawiarniami. Około 10 minut pieszo.","Playa del Cura, Torrevieja"],["Playa de los Locos","Mała zatoczka z przejrzystą wodą, ulubiona przez rodziny.","Playa de los Locos, Torrevieja"],["Różowe jezioro","Laguna Salada de Torrevieja jest najpiękniejsza o zachodzie słońca, wokół park przyrodniczy ze ścieżkami.","Laguna Salada de Torrevieja"],["Paseo del Mar","Nowe centrum rozrywki przy porcie, otwarte latem 2026 roku: 27 restauracji i lokali z widokiem na morze, parking podziemny.","Paseo del Mar, Dique de Levante, Torrevieja"],["Centrum handlowe Habaneras","Sklepy i restauracje przy wjeździe do miasta.","Centro Comercial Habaneras, Torrevieja"],["Mercadona","Około 5 minut pieszo. Czynne od poniedziałku do soboty, 9:00–21:30.","Mercadona Torrevieja"],["Apteki","Najbliższe apteki na mapie. Apteki czynne w nocy znajdą Państwo pod linkiem „Apteki dyżurne”.","farmacia Torrevieja centro"]],
+road:[["Lotnisko Alicante (ALC)","Około 45 minut samochodem."],["Lotnisko Murcja (RMU)","Około 50 minut samochodem."],["Transfer","Chętnie zamówię odbiór z lotniska z tabliczką, szczegóły niżej."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Ogólnoeuropejski numer alarmowy. Można rozmawiać po angielsku."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, izba przyjęć czynna całą dobę.","Hospital Universitario de Torrevieja"]],
+extrasT:"Można dodać",extras:{transfer:"Transfer z lotniska Alicante",late:"Późne wymeldowanie do 14:00",bike:"Rower, za dzień"},
+hostT:"Gospodyni",hostName:"Anna",hostNote:"Proszę pisać na WhatsApp o każdej porze, 24 godziny na dobę. Jeśli nie odpowiem sama, odpisze mój elektroniczny asystent.",wa:"Otwórz WhatsApp",
+foot:"Strona demonstracyjna: apartament, kontakty i ceny są fikcyjne."},
+
+fr:{demo:"Livret d'accueil de démonstration",in:"Arrivée dès",out:"Départ avant",wifi:"Wi-Fi",net:"Réseau",pw:"Mot de passe",copy:"Copier",copied:"Copié",
+codes:"Je vous enverrai les codes de la porte et de la boîte à clés par WhatsApp le jour de votre arrivée, pour que vous les ayez sous la main en arrivant.",
+nav:{arrive:"Arrivée",home:"Appartement",bins:"Tri",rules:"La résidence",leave:"Départ",near:"À proximité",road:"Accès",sos:"Urgences"},
+arrive:[["Entrée","Portillon bleu côté rue, puis ascenseur jusqu'au 3e étage."],["Clés","Boîte à clés à droite de la porte de l'appartement, le code arrive par WhatsApp."],["Stationnement","Places gratuites dans la rue, juste devant l'immeuble."]],
+home:[["Climatisation","La télécommande est dans le tiroir du meuble télé. Heat réchauffe, Cool rafraîchit."],["Eau chaude","Le chauffe-eau de la salle de bain est toujours allumé. Après une longue douche, l'eau chaude revient en 30 à 40 minutes."],["Cuisine","La plaque à induction chauffe vite, et toutes les casseroles du placard du dessous sont compatibles."],["Lave-linge","Les capsules sont sous l'évier. Le programme 40° dure environ une heure."],["Pour la plage","Parasol, 2 transats et serviettes de plage dans le placard de l'entrée."]],
+binsIntro:"Les conteneurs sont tout près : au coin de la rue, à 30 mètres à droite de l'entrée.",
+bins:[["yellow","Jaune","plastique, canettes, briques"],["blue","Bleu","papier et carton"],["green","Cloche verte","verre"],["grey","Gris","le reste"]],
+rules:[["Silence","Merci de respecter le calme de 23h00 à 8h00."],["Balcon","Le balcon a une petite table et un cendrier, le coin préféré des hôtes pour un verre en soirée."],["Piscine","La piscine de la résidence est ouverte de 10h00 à 21h00. Des gobelets en plastique pour la piscine vous attendent dans la cuisine."],["Votre groupe","L'appartement accueille 4 personnes. Si quelqu'un vous rejoint, écrivez-moi et je prévoirai un couchage supplémentaire dans la mesure du possible."]],
+leaveIntro:"Avant de partir, merci de :",leave:["Éteindre la climatisation et les lumières","Fermer les fenêtres et la porte du balcon","Déposer les déchets dans les conteneurs au coin","Laisser les clés dans la boîte et m'envoyer un message. Je serai ravie d'avoir votre avis !"],
+mapT:"Ouvrir dans Google Maps",guardT:"Pharmacies de garde",near:[["Playa del Cura","Plage du centre avec promenade et cafés. Environ 10 minutes à pied.","Playa del Cura, Torrevieja"],["Playa de los Locos","Petite crique aux eaux claires, appréciée des familles.","Playa de los Locos, Torrevieja"],["Lac rose","La Laguna Salada de Torrevieja est superbe au coucher du soleil, avec des sentiers dans le parc naturel.","Laguna Salada de Torrevieja"],["Paseo del Mar","Nouveau pôle de loisirs près du port, ouvert à l'été 2026 : 27 restaurants et lieux avec vue sur la mer, parking souterrain.","Paseo del Mar, Dique de Levante, Torrevieja"],["Centre commercial Habaneras","Boutiques et restaurants à l'entrée de la ville.","Centro Comercial Habaneras, Torrevieja"],["Mercadona","Environ 5 minutes à pied. Ouvert du lundi au samedi, de 9h00 à 21h30.","Mercadona Torrevieja"],["Pharmacies","Les pharmacies les plus proches sur la carte. Pour celles ouvertes la nuit, utilisez le lien « Pharmacies de garde ».","farmacia Torrevieja centro"]],
+road:[["Aéroport d'Alicante (ALC)","Environ 45 minutes en voiture."],["Aéroport de Murcie (RMU)","Environ 50 minutes en voiture."],["Transfert","Je peux réserver un accueil à l'aéroport avec pancarte, voir ci-dessous."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Numéro d'urgence européen. On vous répond aussi en anglais."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, urgences 24h/24.","Hospital Universitario de Torrevieja"]],
+extrasT:"En option",extras:{transfer:"Transfert depuis l'aéroport d'Alicante",late:"Départ tardif jusqu'à 14h00",bike:"Vélo, par jour"},
+hostT:"Votre hôtesse",hostName:"Anna",hostNote:"Écrivez-moi sur WhatsApp à toute heure, 24h/24. Si je ne peux pas répondre moi-même, mon assistant numérique prendra le relais.",wa:"Ouvrir WhatsApp",
+foot:"Page de démonstration : l'appartement, les contacts et les prix sont fictifs."},
+
+sv:{demo:"Demo av gästguide",in:"Incheckning från",out:"Utcheckning senast",wifi:"Wi-Fi",net:"Nätverk",pw:"Lösenord",copy:"Kopiera",copied:"Kopierat",
+codes:"Koderna till dörren och nyckelboxen skickar jag på WhatsApp på ankomstdagen, så att du har dem till hands när du kommer fram.",
+nav:{arrive:"Ankomst",home:"Lägenheten",bins:"Sopsortering",rules:"Huset",leave:"Utcheckning",near:"I närheten",road:"Hitta hit",sos:"Nödläge"},
+arrive:[["Entré","Blå grind mot gatan, sedan hiss till 3:e våningen."],["Nycklar","Nyckelbox till höger om lägenhetsdörren, koden kommer på WhatsApp."],["Parkering","Gratis platser på gatan precis vid huset."]],
+home:[["Luftkonditionering","Fjärrkontrollen ligger i tv-bänkens låda. Heat värmer, Cool kyler."],["Varmvatten","Varmvattenberedaren i badrummet är alltid på. Efter en lång dusch är varmvattnet tillbaka på 30–40 minuter."],["Kök","Induktionshällen blir varm snabbt, och alla kastruller i skåpet under passar till den."],["Tvättmaskin","Tvättkapslar finns under diskbänken. Programmet 40° tar ungefär en timme."],["Till stranden","Parasoll, 2 solstolar och egna strandhanddukar finns i garderoben i hallen."]],
+binsIntro:"Soptunnorna är alldeles nära: på hörnet, 30 meter till höger om entrén.",
+bins:[["yellow","Gul","plast, burkar, dryckeskartonger"],["blue","Blå","papper och kartong"],["green","Grön klocka","glas"],["grey","Grå","övrigt"]],
+rules:[["Tystnad","Vänligen håll det tyst mellan 23:00 och 8:00."],["Balkong","På balkongen finns ett bord och en askkopp, gästernas favoritplats för ett glas på kvällen."],["Pool","Den gemensamma poolen är öppen 10:00–21:00. Plastmuggar för drinkar vid poolen finns i köket."],["Ert sällskap","Lägenheten passar 4 personer. Om någon ansluter, skriv bara till mig så ordnar jag en extra sovplats om det går."]],
+leaveIntro:"Innan du åker, vänligen:",leave:["Stäng av luftkonditioneringen och lamporna","Stäng fönstren och balkongdörren","Lämna soporna i tunnorna på hörnet","Lägg nycklarna i nyckelboxen och skriv till mig. Jag blir glad att höra hur vistelsen var!"],
+mapT:"Öppna i Google Maps",guardT:"Jourapotek",near:[["Playa del Cura","Stadsstrand med strandpromenad och kaféer. Cirka 10 minuter till fots.","Playa del Cura, Torrevieja"],["Playa de los Locos","Liten vik med klart vatten, populär bland barnfamiljer.","Playa de los Locos, Torrevieja"],["Rosa sjön","Laguna Salada de Torrevieja är som vackrast i solnedgången, med promenadstigar i naturparken.","Laguna Salada de Torrevieja"],["Paseo del Mar","Nytt nöjesområde vid hamnen, öppnat sommaren 2026: 27 restauranger och ställen med havsutsikt, underjordiskt garage.","Paseo del Mar, Dique de Levante, Torrevieja"],["Köpcentret Habaneras","Butiker och restauranger vid infarten till stan.","Centro Comercial Habaneras, Torrevieja"],["Mercadona","Cirka 5 minuter till fots. Öppet måndag–lördag, 9:00–21:30.","Mercadona Torrevieja"],["Apotek","Närmaste apotek på kartan. Apotek som har öppet på natten hittar du via länken ”Jourapotek”.","farmacia Torrevieja centro"]],
+road:[["Flygplats Alicante (ALC)","Cirka 45 minuter med bil."],["Flygplats Murcia (RMU)","Cirka 50 minuter med bil."],["Transfer","Jag bokar gärna upphämtning på flygplatsen med skylt, se nedan."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Europeiskt nödnummer. Du kan tala engelska."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, akutmottagning dygnet runt.","Hospital Universitario de Torrevieja"]],
+extrasT:"Lägg till",extras:{transfer:"Transfer från Alicantes flygplats",late:"Sen utcheckning till 14:00",bike:"Cykel, per dag"},
+hostT:"Din värd",hostName:"Anna",hostNote:"Skriv till mig på WhatsApp när som helst, dygnet runt. Om jag inte kan svara själv tar min digitala assistent över.",wa:"Öppna WhatsApp",
+foot:"Demosida: lägenheten, kontakterna och priserna är påhittade."}
+,
+nl:{demo:"Demo gastengids",in:"Inchecken vanaf",out:"Uitchecken vóór",wifi:"Wifi",net:"Netwerk",pw:"Wachtwoord",copy:"Kopiëren",copied:"Gekopieerd",
+codes:"De codes van de deur en de sleutelkluis stuur ik op je aankomstdag via WhatsApp, zodat je ze bij de hand hebt als je aankomt.",
+nav:{arrive:"Aankomst",home:"Appartement",bins:"Afval scheiden",rules:"Het gebouw",leave:"Vertrek",near:"In de buurt",road:"Bereikbaarheid",sos:"Noodgeval"},
+arrive:[["Ingang","Blauw hek aan de straatkant, daarna de lift naar de 3e verdieping."],["Sleutels","Sleutelkluis rechts naast de voordeur van het appartement, de code komt via WhatsApp."],["Parkeren","Gratis plekken op straat, direct bij het gebouw."]],
+home:[["Airco","De afstandsbediening ligt in de la van het tv-meubel. Heat verwarmt, Cool koelt."],["Warm water","De boiler in de badkamer staat altijd aan. Na een lange douche is het warme water na 30–40 minuten terug."],["Keuken","De inductieplaat warmt snel op en alle pannen in het kastje eronder zijn geschikt."],["Wasmachine","Wascapsules liggen onder de gootsteen. Het 40°-programma duurt ongeveer een uur."],["Voor het strand","Parasol, 2 ligbedjes en eigen strandlakens liggen in de kast in de gang."]],
+binsIntro:"De containers staan heel dichtbij: op de hoek, 30 meter rechts van de ingang.",
+bins:[["yellow","Geel","plastic, blik, drankkartons"],["blue","Blauw","papier en karton"],["green","Groene glasbak","glas"],["grey","Grijs","restafval"]],
+rules:[["Stilte","Graag rust van 23:00 tot 8:00."],["Balkon","Op het balkon staan een tafeltje en een asbak, de favoriete plek van gasten voor een drankje 's avonds."],["Zwembad","Het gemeenschappelijke zwembad is open van 10:00 tot 21:00. Plastic bekers voor drankjes bij het zwembad staan in de keuken."],["Jullie gezelschap","Het appartement is voor 4 personen. Komt er iemand bij, stuur me dan een bericht en ik regel indien mogelijk een extra slaapplek."]],
+leaveIntro:"Graag vóór vertrek:",leave:["Airco en lampen uitzetten","Ramen en balkondeur sluiten","Afval naar de containers op de hoek brengen","Sleutels in de kluis leggen en mij een bericht sturen. Ik hoor graag hoe het verblijf was!"],
+mapT:"Openen in Google Maps",guardT:"Dienstdoende apotheken",near:[["Playa del Cura","Stadsstrand met boulevard en cafés. Ongeveer 10 minuten lopen.","Playa del Cura, Torrevieja"],["Playa de los Locos","Kleine baai met helder water, geliefd bij gezinnen.","Playa de los Locos, Torrevieja"],["Roze meer","De Laguna Salada de Torrevieja is op zijn mooist bij zonsondergang, met wandelpaden door het natuurpark.","Laguna Salada de Torrevieja"],["Paseo del Mar","Nieuw uitgaansgebied bij de haven, geopend in de zomer van 2026: 27 restaurants en zaken met zeezicht, ondergrondse parkeergarage.","Paseo del Mar, Dique de Levante, Torrevieja"],["Winkelcentrum Habaneras","Winkels en restaurants aan de rand van de stad.","Centro Comercial Habaneras, Torrevieja"],["Mercadona","Ongeveer 5 minuten lopen. Open maandag t/m zaterdag, 9:00–21:30.","Mercadona Torrevieja"],["Apotheken","Dichtstbijzijnde apotheken op de kaart. Apotheken die 's nachts open zijn vind je via de link „Dienstdoende apotheken”.","farmacia Torrevieja centro"]],
+road:[["Luchthaven Alicante (ALC)","Ongeveer 45 minuten met de auto."],["Luchthaven Murcia (RMU)","Ongeveer 50 minuten met de auto."],["Transfer","Ik regel graag een ophaalservice op de luchthaven met naambord, zie hieronder."],["RadioTaxi Torrevieja","965 712 277"],["Teletaxi Torrevieja","965 101 611"]],
+sos:[["112","Europees alarmnummer. Je kunt Engels spreken."],["062 · 091","Guardia Civil · Policía Nacional"],["Urgencias","Hospital Universitario de Torrevieja, spoedeisende hulp 24 uur per dag.","Hospital Universitario de Torrevieja"]],
+extrasT:"Extra boeken",extras:{transfer:"Transfer vanaf luchthaven Alicante",late:"Laat uitchecken tot 14:00",bike:"Fiets, per dag"},
+hostT:"Je gastvrouw",hostName:"Anna",hostNote:"Stuur me op elk moment een WhatsApp, 24 uur per dag. Als ik zelf niet kan antwoorden, neemt mijn digitale assistent het over.",wa:"WhatsApp openen",
+foot:"Demopagina: het appartement, de contactgegevens en de prijzen zijn fictief."}
+
+};
+
+const EAT = {
+ru:{title:"Где поесть",items:[
+ ["Завтрак","Santagloria, Paseo del Mar","Около 10 минут пешком. Кофе, свежая выпечка и тосты с видом на море в новом Paseo del Mar у порта.","Santagloria Paseo del Mar Torrevieja"],
+ ["Обед","El Pescador","Средиземноморская кухня, особенно хвалят паэлью и рис. Есть меню дня, обычно до 20 € на человека. Лучше бронировать.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Ужин","Alinghi","Средиземноморская кухня на Paseo de la Libertad, терраса с видом на фонтан и порт. На выходные вечером лучше бронировать.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Коктейли","RAMË Cocktails & Food","Коктейли и мексиканская кухня в центре, Calle Clemente Gosálvez, 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+uk:{title:"Де поїсти",items:[
+ ["Сніданок","Santagloria, Paseo del Mar","Близько 10 хвилин пішки. Кава, свіжа випічка й тости з видом на море в новому Paseo del Mar біля порту.","Santagloria Paseo del Mar Torrevieja"],
+ ["Обід","El Pescador","Середземноморська кухня, особливо хвалять паелью та рис. Є меню дня, зазвичай до 20 € на людину. Краще бронювати.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Вечеря","Alinghi","Середземноморська кухня на Paseo de la Libertad, тераса з видом на фонтан і порт. На вихідні ввечері краще бронювати.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Коктейлі","RAMË Cocktails & Food","Коктейлі та мексиканська кухня в центрі, Calle Clemente Gosálvez, 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+en:{title:"Where to eat",items:[
+ ["Breakfast","Santagloria, Paseo del Mar","About 10 minutes on foot. Coffee, fresh pastries and toast with a sea view in the new Paseo del Mar by the port.","Santagloria Paseo del Mar Torrevieja"],
+ ["Lunch","El Pescador","Mediterranean food, best known for paella and rice dishes. Set lunch menu, usually under €20 per person. Booking recommended.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Dinner","Alinghi","Mediterranean food on Paseo de la Libertad, with a terrace overlooking the fountain and the port. Book ahead for weekend evenings.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Cocktails","RAMË Cocktails & Food","Cocktails and Mexican food in the centre, Calle Clemente Gosálvez 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+es:{title:"Dónde comer",items:[
+ ["Desayuno","Santagloria, Paseo del Mar","Unos 10 minutos a pie. Café, bollería recién hecha y tostadas con vistas al mar en el nuevo Paseo del Mar, junto al puerto.","Santagloria Paseo del Mar Torrevieja"],
+ ["Comida","El Pescador","Cocina mediterránea, famosa por su paella y sus arroces. Tiene menú del día, normalmente por menos de 20 € por persona. Mejor reservar.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Cena","Alinghi","Cocina mediterránea en el Paseo de la Libertad, con terraza frente a la fuente y el puerto. Los fines de semana por la noche, mejor reservar.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Cócteles","RAMË Cocktails & Food","Cócteles y cocina mexicana en el centro, calle Clemente Gosálvez, 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+pl:{title:"Gdzie zjeść",items:[
+ ["Śniadanie","Santagloria, Paseo del Mar","Około 10 minut pieszo. Kawa, świeże wypieki i tosty z widokiem na morze w nowym Paseo del Mar przy porcie.","Santagloria Paseo del Mar Torrevieja"],
+ ["Obiad","El Pescador","Kuchnia śródziemnomorska, słynie z paelli i dań z ryżem. Jest menu dnia, zwykle poniżej 20 € za osobę. Warto zarezerwować.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Kolacja","Alinghi","Kuchnia śródziemnomorska przy Paseo de la Libertad, taras z widokiem na fontannę i port. Na weekendowe wieczory warto zarezerwować.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Koktajle","RAMË Cocktails & Food","Koktajle i kuchnia meksykańska w centrum, Calle Clemente Gosálvez 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+fr:{title:"Où manger",items:[
+ ["Petit-déjeuner","Santagloria, Paseo del Mar","Environ 10 minutes à pied. Café, viennoiseries fraîches et tartines avec vue sur la mer, dans le nouveau Paseo del Mar près du port.","Santagloria Paseo del Mar Torrevieja"],
+ ["Déjeuner","El Pescador","Cuisine méditerranéenne, réputée pour sa paella et ses riz. Menu du jour, en général moins de 20 € par personne. Réservation conseillée.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Dîner","Alinghi","Cuisine méditerranéenne sur le Paseo de la Libertad, terrasse face à la fontaine et au port. Réservez pour les soirs de week-end.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Cocktails","RAMË Cocktails & Food","Cocktails et cuisine mexicaine dans le centre, Calle Clemente Gosálvez 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+nl:{title:"Uit eten",items:[
+ ["Ontbijt","Santagloria, Paseo del Mar","Ongeveer 10 minuten lopen. Koffie, vers gebak en toast met zeezicht in het nieuwe Paseo del Mar bij de haven.","Santagloria Paseo del Mar Torrevieja"],
+ ["Lunch","El Pescador","Mediterrane keuken, bekend om paella en rijstgerechten. Dagmenu, meestal onder € 20 per persoon. Reserveren aanbevolen.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Diner","Alinghi","Mediterrane keuken aan de Paseo de la Libertad, terras met uitzicht op de fontein en de haven. Reserveer voor weekendavonden.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Cocktails","RAMË Cocktails & Food","Cocktails en Mexicaans eten in het centrum, Calle Clemente Gosálvez 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]},
+sv:{title:"Var äta",items:[
+ ["Frukost","Santagloria, Paseo del Mar","Cirka 10 minuter till fots. Kaffe, nybakat och rostat bröd med havsutsikt i nya Paseo del Mar vid hamnen.","Santagloria Paseo del Mar Torrevieja"],
+ ["Lunch","El Pescador","Medelhavsmat, känd för paella och risrätter. Dagens lunch, oftast under 20 € per person. Boka gärna bord.","El Pescador, Calle Torrevejenses Ausentes 5, Torrevieja"],
+ ["Middag","Alinghi","Medelhavsmat vid Paseo de la Libertad, terrass med utsikt över fontänen och hamnen. Boka till helgkvällar.","Restaurante Alinghi, Paseo de la Libertad, Torrevieja"],
+ ["Cocktails","RAMË Cocktails & Food","Cocktails och mexikansk mat i centrum, Calle Clemente Gosálvez 5.","RAMË Cocktails & Food, Calle Clemente Gosálvez 5, Torrevieja"]]}
+};
+
+const ADDR = {
+ru:{title:"Адрес",maps:"Открыть на карте",route:"Проложить маршрут",copy:"Скопировать адрес",copied:"Адрес скопирован",driver:"Показать таксисту",close:"Закрыть"},
+uk:{title:"Адреса",maps:"Відкрити на карті",route:"Прокласти маршрут",copy:"Скопіювати адресу",copied:"Адресу скопійовано",driver:"Показати таксисту",close:"Закрити"},
+en:{title:"Address",maps:"Open in Google Maps",route:"Get directions",copy:"Copy address",copied:"Address copied",driver:"Show to taxi driver",close:"Close"},
+es:{title:"Dirección",maps:"Abrir en el mapa",route:"Cómo llegar",copy:"Copiar dirección",copied:"Dirección copiada",driver:"Mostrar al taxista",close:"Cerrar"},
+pl:{title:"Adres",maps:"Otwórz na mapie",route:"Wyznacz trasę",copy:"Kopiuj adres",copied:"Skopiowano adres",driver:"Pokaż taksówkarzowi",close:"Zamknij"},
+fr:{title:"Adresse",maps:"Ouvrir dans Google Maps",route:"Itinéraire",copy:"Copier l'adresse",copied:"Adresse copiée",driver:"Montrer au chauffeur de taxi",close:"Fermer"},
+nl:{title:"Adres",maps:"Openen in Google Maps",route:"Route plannen",copy:"Adres kopiëren",copied:"Adres gekopieerd",driver:"Tonen aan taxichauffeur",close:"Sluiten"},
+sv:{title:"Adress",maps:"Öppna i Google Maps",route:"Vägbeskrivning",copy:"Kopiera adress",copied:"Adressen kopierad",driver:"Visa för taxichauffören",close:"Stäng"}
+};
+const ADDR_Q = () => APT.addr.replace(/ · /g, ", ");
+const mapPin = () => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ADDR_Q());
+const mapRoute = () => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(ADDR_Q());
+function copyAddr(btn){
+  const a = ADDR[lang];
+  const ok = () => { btn.textContent = a.copied; setTimeout(() => btn.textContent = ADDR[lang].copy, 1600); };
+  try { navigator.clipboard.writeText(ADDR_Q()).then(ok, () => {}); } catch(e) {}
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const listHTML = arr => `<ul class="list">${arr.map(([b,s]) => `<li><b>${esc(b)}</b><span>${esc(s)}</span></li>`).join("")}</ul>`;
+let lang = "en";
+try { const saved = localStorage.getItem("guide-lang"); if (saved && T[saved]) lang = saved; } catch(e) {}
+let done = [];
+
+function render(){
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  const order = ["arrive","home","bins","rules","leave","eat","near","road","sos"];
+  document.getElementById("chips").innerHTML = order.map(k => `<a href="#${k}">${esc(k==="eat" ? EAT[lang].title : t.nav[k])}</a>`).join("");
+  document.getElementById("app").innerHTML = `
+  <header class="hero">
+    <span class="demo">${esc(t.demo)}</span>
+    <h1>${esc(APT.name)}</h1>
+    <p class="addr">${esc(APT.addr)}</p>
+    <span class="addr-links"><a href="${mapPin()}" target="_blank" rel="noopener">${esc(ADDR[lang].maps)} ↗</a><a href="${mapRoute()}" target="_blank" rel="noopener">${esc(ADDR[lang].route)} ↗</a><button type="button" class="addr-copy">${esc(ADDR[lang].copy)}</button></span>
+    <div class="times">
+      <div class="time"><small>${esc(t.in)}</small><b>${APT.checkin}</b></div>
+      <div class="time"><small>${esc(t.out)}</small><b>${APT.checkout}</b></div>
+    </div>
+  </header>
+  <div class="wifi">
+    <h2>${esc(t.wifi)}</h2>
+    <dl><dt>${esc(t.net)}</dt><dd>${esc(APT.wifi.ssid)}</dd><dt>${esc(t.pw)}</dt><dd id="pw">${esc(APT.wifi.pass)}</dd></dl>
+    <button type="button" class="btn" id="copy">${esc(t.copy)}</button>
+    <p class="note">${esc(t.codes)}</p>
+  </div>
+  <section id="arrive"><h2>${esc(t.nav.arrive)}</h2>${listHTML(t.arrive)}</section>
+  <section id="home"><h2>${esc(t.nav.home)}</h2>${listHTML(t.home)}</section>
+  <section id="bins"><h2>${esc(t.nav.bins)}</h2><p class="intro">${esc(t.binsIntro)}</p>
+    <div class="bins">${t.bins.map(([c,n,d]) => `<div class="bin"><i style="background:var(--bin-${c})"></i><div><b>${esc(n)}</b><span>${esc(d)}</span></div></div>`).join("")}</div></section>
+  <section id="rules"><h2>${esc(t.nav.rules)}</h2>${listHTML(t.rules)}</section>
+  <section id="leave"><h2>${esc(t.nav.leave)}</h2><p class="intro">${esc(t.leaveIntro)}</p><div class="check">${t.leave.map((x,i) => `<label><input type="checkbox" id="chk${i}" ${done[i]?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div></section>
+  <section id="eat"><h2>${esc(EAT[lang].title)}</h2><div class="places">${EAT[lang].items.map(([slot,n,d,q]) => `<div class="place"><small class="slot">${esc(slot)}</small><b>${esc(n)}</b><span>${esc(d)}</span><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" rel="noopener">${esc(t.mapT)}</a></div></div>`).join("")}</div></section>
+  <section id="near"><h2>${esc(t.nav.near)}</h2><div class="places">${t.near.map(([b,s,q]) => `<div class="place"><b>${esc(b)}</b><span>${esc(s)}</span><div class="links"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" rel="noopener">${esc(t.mapT)}</a>${q.startsWith("farmacia") ? `<a href="https://www.farmaceuticos.com/farmacias-de-guardia/" target="_blank" rel="noopener">${esc(t.guardT)}</a>` : ""}</div></div>`).join("")}</div></section>
+  <section id="road"><h2>${esc(t.nav.road)}</h2>${listHTML(t.road)}</section>
+  <section id="sos" class="sos"><h2>${esc(t.nav.sos)}</h2><ul class="list">${t.sos.map(([b,s,q]) => `<li><b>${esc(b)}</b><span>${esc(s)}</span>${q ? `<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" rel="noopener">${esc(t.mapT)}</a>` : ""}</li>`).join("")}</ul></section>
+  <div class="extras">
+    <h2>${esc(t.extrasT)}</h2>
+    ${APT.extras.map(([k,p]) => `<div class="extra"><span>${esc(t.extras[k])}</span><b>${p}</b></div>`).join("")}
+    <div class="host"><span>${esc(t.hostT)}: <b>${esc(t.hostName)}</b></span><span class="num">${esc(APT.host.phone)}</span>
+      <a href="https://wa.me/${APT.host.wa}" target="_blank" rel="noopener">${esc(t.wa)}</a></div>
+    <span style="color:var(--muted);font-size:14px">${esc(t.hostNote)}</span>
+  </div>
+  <footer>${esc(t.foot)}</footer>`;
+
+  document.querySelectorAll(".addr-copy").forEach(b => b.addEventListener("click", () => copyAddr(b)));
+  document.getElementById("copy").addEventListener("click", e => {
+    const btn = e.currentTarget;
+    const ok = () => { btn.textContent = T[lang].copied; setTimeout(() => btn.textContent = T[lang].copy, 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(document.getElementById("pw")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(APT.wifi.pass).then(ok, fallback); } catch(err) { fallback(); }
+  });
+  document.querySelectorAll(".check input").forEach((c,i) => c.addEventListener("change", () => { done[i] = c.checked; }));
+}
+
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.l;
+  try { localStorage.setItem("guide-lang", lang); } catch(e) {}
+  render();
+}));
+{ const h = location.hash.slice(1); if (T[h]) lang = h; }
+render();
+</script>
+
+</body>
+</html>

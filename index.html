@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Digital Guest Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Cormorant:ital,wght@1,500;1,600&display=swap">
+<style>
+/* Layout: deep-sea hero with two phones, then light "paper" sections; designs as a 2x2 gallery of phones; closing sea band with the WhatsApp call. Salt-lake pink is the only accent. */
+:root{
+  --sea:#0E3A50; --sea-2:#14485F; --on-sea:#F3EEEA; --on-sea-muted:#B9CCD5;
+  --salt:#E7A9B2; --accent:#B8566A;
+  --paper:#F7F5F3; --page:#FFFFFF; --ink:#13202A; --muted:#56646C; --rule:#E2DEDA;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Cormorant","Iowan Old Style",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sea:#0A2B3B; --sea-2:#103747; --paper:#0F1519; --page:#162027; --ink:#ECE7E3; --muted:#A1ADB4; --rule:#27333B; --accent:#E39AA7; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sea:#0A2B3B; --sea-2:#103747; --paper:#0F1519; --page:#162027; --ink:#ECE7E3; --muted:#A1ADB4; --rule:#27333B; --accent:#E39AA7; color-scheme:dark}
+
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sea)}
+.in{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--salt);outline-offset:3px;border-radius:6px}
+h2{font-size:clamp(30px,4.4vw,46px);line-height:1.1;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h2 em{font-family:var(--f-display);font-weight:600;color:var(--accent)}
+.kicker{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+section{padding-block:72px}
+@media (max-width:700px){section{padding-block:52px}}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sea);color:var(--on-sea);border-bottom:1px solid rgba(255,255,255,.08)}
+.bar .in{display:flex;align-items:center;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-right:auto;text-decoration:none}
+.brand i{width:12px;height:12px;border-radius:50%;background:var(--salt)}
+.langs{display:flex;gap:2px}
+.langs button{font:500 13px/1 var(--f-body);letter-spacing:.06em;color:var(--on-sea-muted);background:none;border:0;padding:9px 8px;border-radius:8px;cursor:pointer}
+.langs button[aria-pressed="true"]{color:var(--on-sea);background:rgba(255,255,255,.1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:700 16px/1.2 var(--f-body);text-decoration:none;border-radius:999px;padding:15px 24px;cursor:pointer;border:0;text-align:center}
+.btn-salt{background:var(--salt);color:#0E3A50}
+.btn-line{border:1px solid rgba(243,238,234,.45);color:var(--on-sea)}
+.bar .btn{padding:11px 18px;font-size:14px}
+@media (max-width:640px){.bar .btn{display:none}}
+
+/* hero */
+.hero{background:var(--sea);color:var(--on-sea);overflow:hidden}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center;padding-block:64px 0}
+.hero .kicker{color:var(--salt)}
+.hero h1{margin:18px 0 0;font-size:clamp(36px,5.6vw,64px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+.hero h1 span{display:block;margin-top:8px;font-family:var(--f-display);font-style:italic;font-weight:600;color:var(--salt);font-size:1.18em;line-height:1}
+.lead{margin:22px 0 0;font-size:20px;line-height:1.5;color:var(--on-sea-muted);max-width:34em}
+.ctas{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
+.note{margin:14px 0 0;font-size:14px;color:var(--on-sea-muted)}
+.phones{position:relative;height:560px;align-self:end}
+.phone{position:absolute;bottom:-40px;width:260px;aspect-ratio:390/800;border:10px solid #0B1F2A;border-radius:42px;overflow:hidden;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.phone.a{left:6%;transform:rotate(-5deg)}
+.phone.b{right:4%;bottom:-10px;transform:rotate(4deg)}
+@media (max-width:860px){
+  .hero .in{grid-template-columns:minmax(0,1fr);padding-block:44px 0}
+  .phones{height:420px;max-width:440px;width:100%;margin:0 auto}
+  .phone{width:200px;border-radius:34px;border-width:8px}
+}
+
+/* blocks */
+.grid4{margin-top:36px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:960px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.grid4{grid-template-columns:minmax(0,1fr)}}
+.item{background:var(--page);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px}
+.item b{font-size:19px;line-height:1.25}
+.item p{margin:0;color:var(--muted);font-size:16px}
+.item .no{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:34px;line-height:1;color:var(--accent)}
+
+.split{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr);gap:24px}}
+.list{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:6px 28px;padding:18px 0;border-top:1px solid var(--rule)}
+.row:last-child{border-bottom:1px solid var(--rule)}
+.row b{font-size:19px;line-height:1.3}
+.row p{margin:0;color:var(--muted)}
+@media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
+
+/* designs */
+.designs{background:var(--page)}
+.dsub{margin:14px 0 0;color:var(--muted);max-width:40em}
+.dgrid{margin-top:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:760px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+.design{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:start;background:var(--paper);border-radius:24px;padding:22px}
+.design .ph{width:150px;aspect-ratio:390/600;border:7px solid var(--ink);border-radius:26px;overflow:hidden;background:#fff}
+.design .ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.design h3{margin:0;font-family:var(--f-display);font-style:italic;font-weight:600;font-size:40px;line-height:1}
+.design p{margin:10px 0 0;font-size:16px}
+.design .for{margin-top:10px;font-size:14px;color:var(--muted)}
+.design .btn{margin-top:16px;padding:12px 18px;font-size:15px;background:var(--ink);color:var(--page)}
+@media (max-width:420px){.design{grid-template-columns:minmax(0,1fr)}.design .ph{width:170px}}
+.dnote{margin:20px 0 0;font-size:14px;color:var(--muted)}
+
+/* steps + final cta */
+.final{background:var(--sea);color:var(--on-sea)}
+.final h2 em{color:var(--salt)}
+.steps{margin-top:36px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:s}
+@media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{background:var(--sea-2);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.step .no{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:44px;line-height:1;color:var(--salt)}
+.step b{font-size:20px}
+.step p{margin:0;color:var(--on-sea-muted)}
+.cta-box{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:var(--on-sea);color:#0E3A50;border-radius:28px;padding:28px 32px}
+.cta-box b{font-size:clamp(22px,2.6vw,30px);line-height:1.2;max-width:22em}
+.cta-box .num{display:block;margin-top:6px;font-size:16px;font-weight:500;color:#3D5A69;user-select:all}
+.cta-box .btn{background:#0E3A50;color:var(--on-sea);font-size:18px;padding:18px 28px}
+
+/* faq */
+details{border-top:1px solid var(--rule)}
+details:last-child{border-bottom:1px solid var(--rule)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:20px 0;font-size:19px;font-weight:500}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:26px;font-weight:400;color:var(--accent);flex:none}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 20px;color:var(--muted);max-width:44em}
+footer{padding-block:28px 40px;font-size:14px;color:var(--muted)}
+footer .in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="bar"><div class="in">
+  <a class="brand" href="#top"><i></i><span data-t="brand"></span></a>
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" data-l="en">EN</button><button type="button" data-l="ru">RU</button><button type="button" data-l="pl">PL</button><button type="button" data-l="es">ES</button>
+  </div>
+  <a class="btn btn-salt wa" target="_blank" rel="noopener" data-t="navCta"></a>
+</div></div>
+
+<header class="hero" id="top"><div class="in">
+  <div>
+    <div class="kicker" data-t="eyebrow"></div>
+    <h1><span style="display:inline;margin:0;font:inherit;color:inherit" data-t="h1"></span><span data-t="h1b"></span></h1>
+    <p class="lead" data-t="lead"></p>
+    <div class="ctas">
+      <a class="btn btn-salt wa" target="_blank" rel="noopener" data-t="cta1"></a>
+      <a class="btn btn-line" href="#designs" data-t="cta2"></a>
+    </div>
+    <p class="note" data-t="note"></p>
+  </div>
+  <div class="phones" aria-hidden="true">
+    <div class="phone a"><img src="img-journal.png" alt=""></div>
+    <div class="phone b"><img src="img-app.png" alt=""></div>
+  </div>
+</div></header>
+
+<section><div class="in">
+  <div class="kicker" data-t="incK"></div>
+  <h2 data-t="incT" style="margin-top:12px"></h2>
+  <div class="grid4" id="included"></div>
+</div></section>
+
+<section style="padding-top:0"><div class="in split">
+  <div><div class="kicker" data-t="whoK"></div><h2 data-t="whoT" style="margin-top:12px"></h2></div>
+  <div class="list" id="who"></div>
+</div></section>
+
+<section style="padding-top:0"><div class="in split">
+  <div><div class="kicker" data-t="whyK"></div><h2 data-t="whyT" style="margin-top:12px"></h2></div>
+  <div class="list" id="why"></div>
+</div></section>
+
+<section class="designs" id="designs"><div class="in">
+  <div class="kicker" data-t="desK"></div>
+  <h2 data-t="desT" style="margin-top:12px"></h2>
+  <p class="dsub" data-t="desSub"></p>
+  <div class="dgrid" id="dgrid"></div>
+  <p class="dnote" data-t="desNote"></p>
+</div></section>
+
+<section class="final" id="how"><div class="in">
+  <div class="kicker" style="color:var(--salt)" data-t="howK"></div>
+  <h2 data-t="howT" style="margin-top:12px"></h2>
+  <div class="steps" id="steps"></div>
+  <div class="cta-box">
+    <div><b data-t="ctaBig"></b><span class="num">WhatsApp +34 602 50 90 14</span></div>
+    <a class="btn wa" target="_blank" rel="noopener" data-t="ctaBtn"></a>
+  </div>
+</div></section>
+
+<section id="faq"><div class="in split">
+  <div><div class="kicker" data-t="faqK"></div><h2 data-t="faqT" style="margin-top:12px"></h2></div>
+  <div id="faqList"></div>
+</div></section>
+
+<footer><div class="in"><span data-t="foot"></span><span>WhatsApp +34 602 50 90 14</span></div></footer>
+
+<script>
+const WA = "34602509014";
+const IMG = {classic:"img-classic.png", journal:"img-journal.png", minimal:"img-minimal.png", app:"img-app.png"};
+const S = {
+en:{brand:"Digital guest guide",navCta:"Request a demo",eyebrow:"Digital guest guide · Torrevieja & Costa Blanca",
+h1:"Renting out your apartment short-term?",h1b:"Try a digital guest guide.",
+lead:"Check-in, Wi-Fi, house rules, directions, cafés and beaches nearby — everything on one page that opens from a QR code, in 8 languages.",
+cta1:"Request a demo for your apartment",cta2:"See the 4 designs",note:"Opens in any phone browser. Nothing to install.",
+incK:"What you get",incT:"A guide your guests will actually use",
+inc:[["Guide page","Your apartment's own page, opened by a QR code or a link. Works on any phone, no app needed."],["Laminated card","An A5 card for the wall: Wi-Fi, times, rubbish, contacts and a QR code to the full guide."],["8 languages","English, Spanish, Russian, Ukrainian, Polish, French, Dutch and Swedish. Guests pick their own."],["WhatsApp assistant","Optional. Answers guests from the same guide when you can't reply."]],
+whoK:"Who it's for",whoT:"For hosts who want calm check-ins",
+who:[["Owners who rent by the night","Guests arrive at any hour and ask the same things. The guide answers for you."],["Hosts who live far away","Guests find the door, the keys and the bins without calling you."],["Property managers","One clear format across all your apartments."],["Apartments with guests from abroad","Every guest reads in their own language."]],
+whyK:"Why it helps",whyT:"What changes for you",
+why:[["Made for your apartment","Every section can be edited, and you can add anything your case needs: parking, the pool, pets, the lock box, local rules."],["Fewer repeat questions","Wi-Fi, check-out time, where the bins are: guests look it up instead of messaging you."],["Guests find you first time","Exact address, directions from the station or airport, and a screen to show the taxi driver."],["A local's recommendations","Your favourite places for breakfast, lunch, dinner and cocktails, with map links."],["Extra income","Offer an airport transfer, late check-out or bike rental right in the guide."],["Codes stay private","Door and key-safe codes are sent to each guest personally, never published on the page."]],
+desK:"4 designs",desT:"Choose the look of your guide",desSub:"Four styles, the same content. Open a demo on your phone and see it the way your guest will. In your guide, every section can be changed or added.",
+des:[["classic","Classic","Warm and clear. Fits any apartment.","Best for family apartments and first-time hosts"],["journal","Journal","A magazine look with a sunset cover over the salt lake.","Best for stylish apartments and sea-view flats"],["minimal","Minimal","Nothing extra: big check-in times, sections that open with a tap.","Best for design interiors and modern studios"],["app","App","Feels like a mobile app, with quick tabs and a taxi-driver screen.","Best for guests arriving by train, bus or taxi, and for several apartments"]],
+open:"Open the demo",desNote:"Demo apartment with fictional details.",
+howK:"How to get a demo",howT:"See a demo of your own apartment",
+steps:[["Message me","On WhatsApp: tell me the town and which design you like."],["Send the basics","Address, check-in and check-out times, house rules and a few photos. I'll add the places nearby."],["See your guide","You get a demo with your own details to look through before you decide."]],
+ctaBig:"Message me to request a demo for your apartment",ctaBtn:"Message me on WhatsApp",
+faqK:"Questions",faqT:"Good to know",
+faq:[["Can I change the sections or add my own?","Yes. Every section can be edited, removed or added, so the guide covers exactly what your guests need to know."],["Do guests need to install anything?","No. The guide opens in the phone's browser from the QR code or a link."],["What if the Wi-Fi or the rules change?","Message me and I'll update the page. The QR code stays the same."],["Are the door codes on the page?","No. Codes are sent to each guest privately, for example on WhatsApp on arrival day."],["Can you add another language?","Yes, tell me which language your guests speak."],["I have several apartments","Each one gets its own page and card in the same style."]],
+foot:"Digital guest guide · Torrevieja, Costa Blanca",wa:"Hi! I'd like a demo guest guide for my apartment."},
+
+ru:{brand:"Цифровой гид для гостей",navCta:"Запросить демо",eyebrow:"Цифровой гид для гостей · Торревьеха и Коста-Бланка",
+h1:"Сдаёте квартиру посуточно?",h1b:"Попробуйте цифровой гид для гостей.",
+lead:"Заселение, Wi-Fi, правила дома, маршрут, кафе и пляжи рядом — всё на одной странице, которая открывается по QR-коду, на 8 языках.",
+cta1:"Запросить демо для своей квартиры",cta2:"Посмотреть 4 дизайна",note:"Открывается в браузере любого телефона. Ничего не нужно устанавливать.",
+incK:"Что входит",incT:"Гид, которым гости действительно пользуются",
+inc:[["Страница-гид","Своя страница вашей квартиры, открывается по QR-коду или ссылке. Работает на любом телефоне без приложений."],["Ламинированная табличка","Табличка A5 на стену: Wi-Fi, время заезда и выезда, мусор, контакты и QR-код на полный гид."],["8 языков","Английский, испанский, русский, украинский, польский, французский, нидерландский и шведский. Гость выбирает сам."],["WhatsApp-помощник","По желанию. Отвечает гостям по тому же гиду, когда вы не можете ответить."]],
+whoK:"Кому подойдёт",whoT:"Для хозяев, которые хотят спокойных заселений",
+who:[["Тем, кто сдаёт посуточно","Гости приезжают в любое время и спрашивают одно и то же. Гид отвечает за вас."],["Тем, кто живёт далеко от квартиры","Гости сами находят дверь, ключи и контейнеры без звонков."],["Управляющим несколькими квартирами","Один понятный формат для всех ваших квартир."],["Квартирам с иностранными гостями","Каждый гость читает на своём языке."]],
+whyK:"Зачем это нужно",whyT:"Что меняется для вас",
+why:[["Под вашу квартиру","Любой пункт можно отредактировать и добавить информацию, нужную именно в вашем случае: парковка, бассейн, животные, ключница, правила комплекса."],["Меньше одинаковых вопросов","Wi-Fi, время выезда, где мусор: гости смотрят сами, а не пишут вам."],["Гости находят вас с первого раза","Точный адрес, маршрут от вокзала или аэропорта и экран, который можно показать таксисту."],["Советы местного жителя","Ваши любимые места для завтрака, обеда, ужина и коктейлей, со ссылками на карту."],["Дополнительный доход","Предложите трансфер из аэропорта, поздний выезд или велосипеды прямо в гиде."],["Коды остаются в секрете","Коды от двери и сейфа отправляются гостю лично и никогда не публикуются на странице."]],
+desK:"4 дизайна",desT:"Выберите стиль гида",desSub:"Четыре стиля, одно содержание. Откройте демо на телефоне и посмотрите глазами гостя. В вашем гиде любой пункт можно изменить или добавить новый.",
+des:[["classic","Классика","Тёплый и понятный. Подойдёт для любой квартиры.","Для семейных квартир и тех, кто только начинает сдавать"],["journal","Журнал","Журнальная подача и обложка с закатом над солёным озером.","Для стильных апартаментов и квартир с видом на море"],["minimal","Минимал","Ничего лишнего: крупное время заезда, разделы открываются по нажатию.","Для дизайнерских интерьеров и современных студий"],["app","Приложение","Как мобильное приложение: быстрые вкладки и экран для таксиста.","Для гостей с поезда, автобуса или такси и для нескольких квартир"]],
+open:"Открыть демо",desNote:"Демо-квартира, все данные вымышленные.",
+howK:"Как получить демо",howT:"Посмотрите демо своей квартиры",
+steps:[["Напишите мне","В WhatsApp: укажите город и какой дизайн вам нравится."],["Пришлите основное","Адрес, время заезда и выезда, правила дома и пару фото. Места рядом подберу я."],["Посмотрите свой гид","Вы получите демо со своими данными и сможете всё посмотреть, прежде чем решать."]],
+ctaBig:"Напишите мне и запросите демо-версию для своей квартиры",ctaBtn:"Написать в WhatsApp",
+faqK:"Вопросы",faqT:"Полезно знать",
+faq:[["Можно изменить пункты или добавить свои?","Да. Любой пункт можно отредактировать, убрать или добавить, чтобы в гиде было именно то, что нужно вашим гостям."],["Гостям нужно что-то устанавливать?","Нет. Гид открывается в браузере телефона по QR-коду или ссылке."],["Что если поменяется Wi-Fi или правила?","Напишите мне, и я обновлю страницу. QR-код останется тем же."],["Коды от двери будут на странице?","Нет. Коды отправляются каждому гостю лично, например в WhatsApp в день заезда."],["Можно добавить другой язык?","Да, скажите, на каком языке говорят ваши гости."],["У меня несколько квартир","У каждой будет своя страница и табличка в одном стиле."]],
+foot:"Цифровой гид для гостей · Торревьеха, Коста-Бланка",wa:"Здравствуйте! Хочу демо гида для гостей для своей квартиры."},
+
+pl:{brand:"Cyfrowy przewodnik dla gości",navCta:"Zamów demo",eyebrow:"Cyfrowy przewodnik dla gości · Torrevieja i Costa Blanca",
+h1:"Wynajmujesz mieszkanie na krótki termin?",h1b:"Wypróbuj cyfrowy przewodnik dla gości.",
+lead:"Zameldowanie, Wi-Fi, zasady domu, dojazd, kawiarnie i plaże w pobliżu — wszystko na jednej stronie otwieranej kodem QR, w 8 językach.",
+cta1:"Zamów demo dla swojego mieszkania",cta2:"Zobacz 4 projekty",note:"Otwiera się w przeglądarce każdego telefonu. Bez instalowania aplikacji.",
+incK:"Co dostajesz",incT:"Przewodnik, z którego goście naprawdę korzystają",
+inc:[["Strona-przewodnik","Własna strona Twojego mieszkania, otwierana kodem QR lub linkiem. Działa na każdym telefonie, bez aplikacji."],["Zalaminowana karta","Karta A5 na ścianę: Wi-Fi, godziny, segregacja śmieci, kontakty i kod QR do pełnego przewodnika."],["8 języków","Angielski, hiszpański, rosyjski, ukraiński, polski, francuski, niderlandzki i szwedzki. Gość wybiera sam."],["Asystent WhatsApp","Opcjonalnie. Odpowiada gościom na podstawie przewodnika, gdy nie możesz odpisać."]],
+whoK:"Dla kogo",whoT:"Dla gospodarzy, którzy chcą spokojnych zameldowań",
+who:[["Wynajmujący na doby","Goście przyjeżdżają o każdej porze i pytają o to samo. Przewodnik odpowiada za Ciebie."],["Gospodarze, którzy mieszkają daleko","Goście sami znajdą drzwi, klucze i kontenery, bez telefonu do Ciebie."],["Zarządcy wielu mieszkań","Jeden przejrzysty format dla wszystkich Twoich mieszkań."],["Mieszkania z gośćmi z zagranicy","Każdy gość czyta w swoim języku."]],
+whyK:"Dlaczego warto",whyT:"Co się zmienia dla Ciebie",
+why:[["Dopasowany do Twojego mieszkania","Każdy punkt można edytować i dodać informacje potrzebne właśnie w Twoim przypadku: parking, basen, zwierzęta, skrzynka na klucze, zasady osiedla."],["Mniej powtarzających się pytań","Wi-Fi, godzina wymeldowania, gdzie są kontenery: goście sprawdzają sami, zamiast pisać do Ciebie."],["Goście trafiają za pierwszym razem","Dokładny adres, trasa z dworca lub lotniska i ekran do pokazania taksówkarzowi."],["Polecenia od miejscowego","Twoje ulubione miejsca na śniadanie, obiad, kolację i koktajle, z linkami do mapy."],["Dodatkowy dochód","Zaproponuj transfer z lotniska, późne wymeldowanie lub rowery bezpośrednio w przewodniku."],["Kody pozostają prywatne","Kody do drzwi i sejfu są wysyłane gościom osobiście i nigdy nie trafiają na stronę."]],
+desK:"4 projekty",desT:"Wybierz wygląd przewodnika",desSub:"Cztery style, ta sama treść. Otwórz demo na telefonie i zobacz je oczami gościa. W Twoim przewodniku każdy punkt można zmienić lub dodać nowy.",
+des:[["classic","Klasyczny","Ciepły i przejrzysty. Pasuje do każdego mieszkania.","Dla mieszkań rodzinnych i początkujących gospodarzy"],["journal","Magazyn","Styl magazynu i okładka z zachodem słońca nad słonym jeziorem.","Dla stylowych apartamentów i mieszkań z widokiem na morze"],["minimal","Minimal","Nic zbędnego: duże godziny zameldowania, sekcje otwierane jednym dotknięciem.","Dla designerskich wnętrz i nowoczesnych studiów"],["app","Aplikacja","Jak aplikacja mobilna: szybkie zakładki i ekran dla taksówkarza.","Dla gości przyjeżdżających pociągiem, autobusem lub taksówką oraz dla wielu mieszkań"]],
+open:"Otwórz demo",desNote:"Mieszkanie demonstracyjne, dane są fikcyjne.",
+howK:"Jak zamówić demo",howT:"Zobacz demo swojego mieszkania",
+steps:[["Napisz do mnie","Na WhatsApp: podaj miasto i projekt, który Ci się podoba."],["Wyślij podstawowe informacje","Adres, godziny zameldowania i wymeldowania, zasady domu i kilka zdjęć. Polecane miejsca w okolicy dodam od siebie."],["Zobacz swój przewodnik","Otrzymasz demo ze swoimi danymi i obejrzysz je, zanim podejmiesz decyzję."]],
+ctaBig:"Napisz do mnie i zamów demo dla swojego mieszkania",ctaBtn:"Napisz na WhatsApp",
+faqK:"Pytania",faqT:"Warto wiedzieć",
+faq:[["Czy mogę zmienić punkty albo dodać własne?","Tak. Każdy punkt można edytować, usunąć lub dodać, żeby przewodnik zawierał dokładnie to, czego potrzebują Twoi goście."],["Czy goście muszą coś instalować?","Nie. Przewodnik otwiera się w przeglądarce telefonu z kodu QR lub linku."],["A jeśli zmieni się Wi-Fi lub zasady?","Napisz do mnie, a zaktualizuję stronę. Kod QR pozostaje ten sam."],["Czy kody do drzwi będą na stronie?","Nie. Kody są wysyłane każdemu gościowi osobiście, na przykład na WhatsApp w dniu przyjazdu."],["Czy można dodać inny język?","Tak, powiedz, w jakim języku mówią Twoi goście."],["Mam kilka mieszkań","Każde dostanie własną stronę i kartę w tym samym stylu."]],
+foot:"Cyfrowy przewodnik dla gości · Torrevieja, Costa Blanca",wa:"Dzień dobry! Proszę o demo przewodnika dla gości dla mojego mieszkania."},
+
+es:{brand:"Guía digital para huéspedes",navCta:"Pedir demo",eyebrow:"Guía digital para huéspedes · Torrevieja y Costa Blanca",
+h1:"¿Alquilas tu piso a turistas?",h1b:"Prueba la guía digital para huéspedes.",
+lead:"Entrada, wifi, normas de la casa, cómo llegar, cafeterías y playas cercanas: todo en una sola página que se abre con un código QR, en 8 idiomas.",
+cta1:"Pide una demo para tu piso",cta2:"Ver los 4 diseños",note:"Se abre en el navegador de cualquier móvil. Sin instalar nada.",
+incK:"Qué incluye",incT:"Una guía que tus huéspedes usarán de verdad",
+inc:[["Página guía","Una página propia de tu piso que se abre con un código QR o un enlace. Funciona en cualquier móvil, sin apps."],["Cartel plastificado","Cartel A5 para la pared: wifi, horarios, reciclaje, contactos y el QR de la guía completa."],["8 idiomas","Inglés, español, ruso, ucraniano, polaco, francés, neerlandés y sueco. Cada huésped elige el suyo."],["Asistente de WhatsApp","Opcional. Responde a los huéspedes con la información de la guía cuando tú no puedes."]],
+whoK:"Para quién es",whoT:"Para anfitriones que quieren entradas tranquilas",
+who:[["Si alquilas por noches","Los huéspedes llegan a cualquier hora y preguntan lo mismo. La guía responde por ti."],["Si vives lejos del piso","Encuentran la puerta, las llaves y los contenedores sin llamarte."],["Si gestionas varios pisos","Un formato claro para todos tus apartamentos."],["Si recibes huéspedes extranjeros","Cada uno lo lee en su idioma."]],
+whyK:"Por qué funciona",whyT:"Qué cambia para ti",
+why:[["A medida de tu piso","Cada apartado se puede editar y puedes añadir lo que necesites en tu caso: aparcamiento, piscina, mascotas, caja de llaves, normas de la urbanización."],["Menos preguntas repetidas","Wifi, hora de salida, dónde están los contenedores: lo consultan en la guía en lugar de escribirte."],["Llegan a la primera","Dirección exacta, ruta desde la estación o el aeropuerto y una pantalla para enseñar al taxista."],["Recomendaciones de alguien local","Tus sitios favoritos para desayunar, comer, cenar y tomar un cóctel, con enlace al mapa."],["Ingresos extra","Ofrece traslado desde el aeropuerto, salida tardía o bicicletas en la propia guía."],["Los códigos, en privado","Los códigos de la puerta y de la caja de llaves se envían a cada huésped en privado, nunca aparecen en la página."]],
+desK:"4 diseños",desT:"Elige el estilo de tu guía",desSub:"Cuatro estilos, el mismo contenido. Abre una demo en el móvil y mírala como la verá tu huésped. En tu guía, cada apartado se puede cambiar o añadir.",
+des:[["classic","Clásico","Cálido y claro. Va bien con cualquier piso.","Para pisos familiares y anfitriones que empiezan"],["journal","Revista","Estilo revista con portada de atardecer sobre la laguna salada.","Para apartamentos con estilo y pisos con vistas al mar"],["minimal","Minimal","Nada de más: horarios grandes y secciones que se abren con un toque.","Para interiores de diseño y estudios modernos"],["app","App","Como una app: pestañas rápidas y una pantalla para el taxista.","Para huéspedes que llegan en tren, autobús o taxi, y para varios pisos"]],
+open:"Abrir la demo",desNote:"Piso de demostración con datos ficticios.",
+howK:"Cómo pedir la demo",howT:"Mira una demo de tu propio piso",
+steps:[["Escríbeme","Por WhatsApp: dime la ciudad y qué diseño te gusta."],["Envíame lo básico","Dirección, horarios de entrada y salida, normas de la casa y unas fotos. Los sitios cercanos los añado yo."],["Mira tu guía","Recibes una demo con tus propios datos para revisarla antes de decidir."]],
+ctaBig:"Escríbeme y pide una demo para tu piso",ctaBtn:"Escríbeme por WhatsApp",
+faqK:"Preguntas",faqT:"Conviene saber",
+faq:[["¿Puedo cambiar los apartados o añadir los míos?","Sí. Cada apartado se puede editar, quitar o añadir, para que la guía tenga justo lo que necesitan tus huéspedes."],["¿Los huéspedes tienen que instalar algo?","No. La guía se abre en el navegador del móvil con el QR o un enlace."],["¿Y si cambia el wifi o las normas?","Escríbeme y actualizo la página. El código QR sigue siendo el mismo."],["¿Los códigos de la puerta aparecen en la página?","No. Se envían a cada huésped en privado, por ejemplo por WhatsApp el día de llegada."],["¿Se puede añadir otro idioma?","Sí, dime qué idioma hablan tus huéspedes."],["Tengo varios pisos","Cada uno tiene su propia página y su cartel, con el mismo estilo."]],
+foot:"Guía digital para huéspedes · Torrevieja, Costa Blanca",wa:"¡Hola! Me gustaría una demo de la guía para huéspedes para mi piso."}
+};
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let lang = "en";
+try { const s = localStorage.getItem("gg-landing-lang"); if (s && S[s]) lang = s; } catch(e) {}
+{ const h = location.hash.slice(1); if (S[h]) lang = h; }
+
+function render(){
+  const t = S[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => { el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  const wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(t.wa);
+  document.querySelectorAll("a.wa").forEach(a => a.href = wa);
+  document.getElementById("included").innerHTML = t.inc.map(([b,p]) => `<div class="item"><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join("");
+  document.getElementById("who").innerHTML = t.who.map(([b,p]) => `<div class="row"><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join("");
+  document.getElementById("why").innerHTML = t.why.map(([b,p]) => `<div class="row"><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join("");
+  document.getElementById("dgrid").innerHTML = t.des.map(([k,n,d,f]) => `<article class="design"><div class="ph"><img src="${IMG[k]}" alt="${esc(n)}"></div><div><h3>${esc(n)}</h3><p>${esc(d)}</p><div class="for">${esc(f)}</div><a class="btn" href="demo-${k}.html#${lang}" target="_blank" rel="noopener">${esc(t.open)} ↗</a></div></article>`).join("");
+  document.getElementById("steps").innerHTML = t.steps.map(([b,p],i) => `<div class="step"><span class="no">${i+1}</span><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join("");
+  document.getElementById("faqList").innerHTML = t.faq.map(([q,a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
+}
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.l;
+  try { localStorage.setItem("gg-landing-lang", lang); } catch(e) {}
+  render();
+}));
+render();
+</script>
+
+</body>
+</html>
