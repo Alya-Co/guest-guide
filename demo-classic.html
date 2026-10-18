@@ -382,5 +382,6 @@ document.querySelectorAll(".langs button").forEach(b => b.addEventListener("clic
 render();
 </script>
 
+<script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }</script>
 </body>
 </html>

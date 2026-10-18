@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Create Your Guest Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Cormorant:ital,wght@1,500;1,600&display=swap">
+<style>
+/* Layout: form column on the left, sticky phone preview on the right; one column on phones. Same sea + salt palette as the landing. */
+:root{
+  --sea:#0E3A50; --on-sea:#F3EEEA; --on-sea-muted:#B9CCD5; --salt:#E7A9B2; --accent:#B8566A;
+  --paper:#F7F5F3; --page:#FFFFFF; --ink:#13202A; --muted:#56646C; --rule:#E2DEDA; --field:#FFFFFF;
+  --ok:#2F7A4F; --bad:#B23A3A;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"Cormorant","Iowan Old Style",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sea:#0A2B3B; --paper:#0F1519; --page:#162027; --ink:#ECE7E3; --muted:#A1ADB4; --rule:#2A363E; --field:#101A20; --accent:#E39AA7; --ok:#6CC08F; --bad:#E58A8A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --sea:#0A2B3B; --paper:#0F1519; --page:#162027; --ink:#ECE7E3; --muted:#A1ADB4; --rule:#2A363E; --field:#101A20; --accent:#E39AA7; --ok:#6CC08F; --bad:#E58A8A; color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sea)}
+.in{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sea);color:var(--on-sea)}
+.bar .in{display:flex;align-items:center;gap:14px;padding-block:12px}
+.bar a.back{color:var(--on-sea-muted);text-decoration:none;font-size:14px;margin-right:auto}
+.langs{display:flex;gap:2px}
+.langs button{font:500 13px/1 var(--f-body);color:var(--on-sea-muted);background:none;border:0;padding:9px 8px;border-radius:8px;cursor:pointer}
+.langs button[aria-pressed="true"]{color:var(--on-sea);background:rgba(255,255,255,.1)}
+header.top{background:var(--sea);color:var(--on-sea)}
+header.top .in{padding-block:36px 40px}
+header.top h1{margin:0;font-size:clamp(30px,4.6vw,48px);line-height:1.1;text-wrap:balance}
+header.top h1 em{font-family:var(--f-display);font-weight:600;color:var(--salt)}
+header.top p{margin:14px 0 0;color:var(--on-sea-muted);max-width:46em;font-size:18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:40px;align-items:start;padding-block:36px 64px}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}}
+fieldset{border:0;margin:0 0 28px;padding:0;min-width:0}
+legend{font-size:22px;font-weight:700;padding:0;margin-bottom:14px}
+.hint{margin:-6px 0 14px;color:var(--muted);font-size:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:560px){.grid2{grid-template-columns:minmax(0,1fr)}}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;min-width:0}
+label.f.full{grid-column:1/-1}
+input[type=text],input[type=time],select,textarea{font:400 16px/1.4 var(--f-body);color:var(--ink);background:var(--field);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;width:100%;box-sizing:border-box}
+textarea{min-height:110px;resize:vertical}
+.small{font-size:13px;color:var(--muted);font-weight:400}
+.designs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.designs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.designs label{position:relative;display:flex;flex-direction:column;gap:8px;align-items:center;background:var(--page);border:2px solid transparent;border-radius:16px;padding:10px;cursor:pointer;font-weight:600;font-size:14px}
+.designs input{position:absolute;opacity:0;pointer-events:none}
+.designs img{width:100%;aspect-ratio:390/520;object-fit:cover;object-position:top;border-radius:10px;border:1px solid var(--rule)}
+.designs label:has(input:checked){border-color:var(--accent)}
+.designs label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;font:700 16px/1.2 var(--f-body);border-radius:999px;padding:15px 24px;border:0;cursor:pointer;text-decoration:none}
+.btn-main{background:var(--sea);color:var(--on-sea)}
+.btn-salt{background:var(--salt);color:#0E3A50}
+.btn-line{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn[disabled]{opacity:.55;cursor:default}
+.side{position:sticky;top:76px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:980px){.side{position:static}}
+.phone{width:min(100%,390px);margin:0 auto;aspect-ratio:390/760;border:10px solid #0B1F2A;border-radius:44px;overflow:hidden;background:var(--page);position:relative}
+.phone iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.phone .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;color:var(--muted);font-size:15px}
+.notice{background:var(--page);border-radius:16px;padding:14px 16px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.notice b{color:var(--ink)}
+.send{background:var(--page);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.send h2{margin:0;font-size:22px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.consent input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--accent)}
+.consent a{color:var(--ink)}
+.status{font-size:15px;font-weight:500;min-height:1.4em}
+.status.ok{color:var(--ok)} .status.bad{color:var(--bad)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#changesBox[hidden]{display:none}
+</style>
+
+<div class="bar"><div class="in">
+  <a class="back" href="index.html" id="backLink" data-t="back"></a>
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" data-l="en">EN</button><button type="button" data-l="ru">RU</button><button type="button" data-l="pl">PL</button><button type="button" data-l="es">ES</button>
+  </div>
+</div></div>
+
+<header class="top"><div class="in">
+  <h1 id="h1"></h1>
+  <p data-t="lead"></p>
+</div></header>
+
+<main class="in layout">
+  <form id="form" novalidate>
+    <fieldset>
+      <legend data-t="s1"></legend>
+      <div class="designs" id="designs"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-t="s2"></legend>
+      <div class="grid2">
+        <label class="f full"><span data-t="f_name"></span><input type="text" id="f_name" maxlength="80"></label>
+        <label class="f full"><span data-t="f_addr"></span><input type="text" id="f_addr" maxlength="200"></label>
+        <label class="f"><span data-t="f_in"></span><input type="time" id="f_in" value="16:00"></label>
+        <label class="f"><span data-t="f_out"></span><input type="time" id="f_out" value="11:00"></label>
+        <label class="f"><span data-t="f_ssid"></span><input type="text" id="f_ssid" maxlength="60"></label>
+        <label class="f"><span data-t="f_pass"></span><input type="text" id="f_pass" maxlength="60" autocomplete="off"></label>
+        <p class="small full" style="grid-column:1/-1;margin:0" data-t="passNote"></p>
+        <label class="f"><span data-t="f_host"></span><input type="text" id="f_host" maxlength="60"></label>
+        <label class="f"><span data-t="f_hosp"></span><input type="text" id="f_hosp" maxlength="120"></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-t="s3"></legend>
+      <p class="hint" data-t="hint"></p>
+      <div class="grid2">
+        <label class="f full"><span data-t="f_arrive"></span><textarea id="f_arrive" maxlength="1500"></textarea></label>
+        <label class="f full"><span data-t="f_home"></span><textarea id="f_home" maxlength="1500"></textarea></label>
+        <label class="f"><span data-t="f_rules"></span><textarea id="f_rules" maxlength="1000"></textarea></label>
+        <label class="f"><span data-t="f_leave"></span><textarea id="f_leave" maxlength="1000"></textarea></label>
+        <label class="f"><span data-t="f_near"></span><textarea id="f_near" maxlength="1500"></textarea></label>
+        <label class="f"><span data-t="f_eat"></span><textarea id="f_eat" maxlength="1000"></textarea></label>
+        <label class="f full"><span data-t="f_road"></span><textarea id="f_road" maxlength="1000"></textarea></label>
+      </div>
+    </fieldset>
+
+    <button type="button" class="btn btn-main" id="showBtn" data-t="show"></button>
+
+    <section class="send" id="sendBox" style="margin-top:32px">
+      <h2 data-t="s5"></h2>
+      <div class="grid2">
+        <label class="f"><span data-t="f_you"></span><input type="text" id="f_you" maxlength="80" autocomplete="name"></label>
+        <label class="f"><span data-t="f_method"></span>
+          <select id="f_method"><option>WhatsApp</option><option>Email</option><option>Telegram</option></select></label>
+        <label class="f full"><span data-t="f_contact"></span><input type="text" id="f_contact" maxlength="120"></label>
+        <div id="changesBox" hidden style="grid-column:1/-1"><label class="f"><span data-t="f_changes"></span><textarea id="f_changes" maxlength="1500"></textarea></label></div>
+      </div>
+      <label class="hp" aria-hidden="true">Website<input type="text" id="website" tabindex="-1" autocomplete="off"></label>
+      <label class="consent"><input type="checkbox" id="f_consent"><span><span data-t="consent"></span> <a href="privacy.html" target="_blank" rel="noopener" id="privacyLink" data-t="privacy"></a></span></label>
+      <div class="acts">
+        <button type="button" class="btn btn-salt" id="wantBtn" data-t="want"></button>
+        <button type="button" class="btn btn-line" id="changesBtn" data-t="changes"></button>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </section>
+  </form>
+
+  <aside class="side">
+    <div class="phone" id="phone">
+      <div class="empty" id="empty" data-t="empty"></div>
+    </div>
+    <div class="notice"><b data-t="prevNote"></b><span data-t="exNote"></span><span data-t="fullNote"></span></div>
+  </aside>
+</main>
+
+<script>
+/* Where requests go: the address of your Cloudflare Worker, for example
+   "https://guest-guide-leads.your-name.workers.dev/lead". Empty = sending is off. */
+const ENDPOINT = "";
+
+const DESIGNS = [["classic","img-classic.png"],["journal","img-journal.png"],["minimal","img-minimal.png"],["app","img-app.png"]];
+const L = {
+en:{back:"← Back",h1a:"Create a demo of ",h1b:"your guest guide",lead:"Fill in what you know — even a few fields are enough. The preview builds itself in the design you choose.",
+s1:"1. Design",dn:{classic:"Classic",journal:"Journal",minimal:"Minimal",app:"App"},s2:"2. The apartment",f_name:"Apartment name",f_addr:"Address: street, number, floor, postcode, town",f_in:"Check-in from",f_out:"Check-out by",f_ssid:"Wi-Fi network",f_pass:"Wi-Fi password",passNote:"You can leave the password empty: in the real guide we'll decide together how to show it safely.",f_host:"Host name for guests",f_hosp:"Nearest hospital or clinic",
+s3:"3. Content",hint:"One item per line. Write “Title: text”, for example “Keys: key safe to the right of the door”.",
+f_arrive:"How to get in",f_home:"Apartment and appliances",f_rules:"House rules",f_leave:"Before check-out",f_near:"Places nearby",f_eat:"Where to eat",f_road:"Getting here",
+ph:{f_name:"Sea View Apartment",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrance: blue gate, then the lift to the 3rd floor\nKeys: key safe to the right of the door\nParking: free on the street",f_home:"Air conditioning: remote in the TV drawer\nInduction hob: works with the pans in the cupboard\nIn the flat: iron, hairdryer, microwave, towels",f_rules:"Quiet hours: 23:00–8:00\nPool: 10:00–21:00",f_leave:"Switch off the air conditioning\nTake the rubbish out\nLeave the keys in the safe",f_near:"Beach: 10 minutes on foot\nSupermarket: 5 minutes on foot",f_eat:"Breakfast: Café Sol, sea view\nDinner: La Marina, fresh fish",f_road:"Alicante airport: about 45 minutes by car\nTaxi: 965 712 277"},
+show:"Show the demo",empty:"Fill in a few fields and press “Show the demo”.",
+prevNote:"This is a preview. It exists only on this screen, right now: there is no link to it, and it disappears when you close the page.",exNote:"Sections you left empty show sample text.",fullNote:"The full guide adds 8 languages, your photos, a laminated card with a QR code and offline mode.",
+s5:"Like it? Send a request",f_you:"Your name",f_method:"How should I contact you?",f_contact:"Your number, email or username",f_changes:"What should be changed or added?",
+consent:"I agree that my details are used to reply to this request.",privacy:"Privacy policy",want:"I want this guide",changes:"I need changes or additions",sendChanges:"Send changes",
+sending:"Sending…",ok:"Thank you! I'll contact you soon in the way you chose.",okUrgent:"Thank you! I've got your changes and will contact you as soon as possible.",err:"Couldn't send. Check your connection and try again.",off:"Sending isn't switched on yet.",needContact:"Add how I can contact you.",needConsent:"Please tick the consent box.",needChanges:"Write what should be changed.",
+defName:"My apartment",hiddenPhone:"(your number)",kind:{lead:"I want this guide",changes:"Needs changes"}},
+ru:{back:"← Назад",h1a:"Создайте демо ",h1b:"гида для своей квартиры",lead:"Заполните то, что знаете, — хватит и нескольких полей. Предпросмотр соберётся сам в выбранном дизайне.",
+s1:"1. Дизайн",dn:{classic:"Классика",journal:"Журнал",minimal:"Минимал",app:"Приложение"},s2:"2. Квартира",f_name:"Название квартиры",f_addr:"Адрес: улица, дом, этаж, индекс, город",f_in:"Заезд с",f_out:"Выезд до",f_ssid:"Сеть Wi-Fi",f_pass:"Пароль Wi-Fi",passNote:"Пароль можно не указывать: в настоящем гиде вместе решим, как показать его безопасно.",f_host:"Имя хозяина для гостей",f_hosp:"Ближайшая больница или клиника",
+s3:"3. Содержание",hint:"Один пункт — одна строка. Пишите «Заголовок: текст», например «Ключи: сейф справа от двери».",
+f_arrive:"Как войти",f_home:"Квартира и техника",f_rules:"Правила дома",f_leave:"Перед выездом",f_near:"Что рядом",f_eat:"Где поесть",f_road:"Как добраться",
+ph:{f_name:"Апартаменты у моря",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Вход: синяя калитка, дальше лифт на 3-й этаж\nКлючи: сейф справа от двери\nПарковка: бесплатно на улице",f_home:"Кондиционер: пульт в ящике у телевизора\nИндукционная плита: работает с посудой из шкафа\nВ квартире: утюг, фен, микроволновка, полотенца",f_rules:"Тишина: с 23:00 до 8:00\nБассейн: с 10:00 до 21:00",f_leave:"Выключить кондиционер\nВынести мусор\nОставить ключи в сейфе",f_near:"Пляж: 10 минут пешком\nСупермаркет: 5 минут пешком",f_eat:"Завтрак: кафе Sol, вид на море\nУжин: La Marina, свежая рыба",f_road:"Аэропорт Аликанте: около 45 минут на машине\nТакси: 965 712 277"},
+show:"Показать демо",empty:"Заполните несколько полей и нажмите «Показать демо».",
+prevNote:"Это предпросмотр. Он существует только на этом экране и только сейчас: ссылки на него нет, и он исчезнет, когда вы закроете страницу.",exNote:"Разделы, которые вы не заполнили, показаны на примере.",fullNote:"В полной версии — 8 языков, ваши фото, ламинированная табличка с QR-кодом и работа без интернета.",
+s5:"Понравилось? Отправьте заявку",f_you:"Ваше имя",f_method:"Как с вами связаться?",f_contact:"Ваш номер, почта или ник",f_changes:"Что изменить или добавить?",
+consent:"Даю согласие на использование моих данных для ответа на заявку.",privacy:"Политика конфиденциальности",want:"Хочу такой гид",changes:"Нужны правки или дополнения",sendChanges:"Отправить правки",
+sending:"Отправляю…",ok:"Спасибо! Я скоро свяжусь с вами выбранным способом.",okUrgent:"Спасибо! Правки получены, свяжусь с вами в ближайшее время.",err:"Не получилось отправить. Проверьте связь и попробуйте ещё раз.",off:"Отправка пока не подключена.",needContact:"Укажите, как с вами связаться.",needConsent:"Поставьте галочку согласия.",needChanges:"Напишите, что нужно изменить.",
+defName:"Моя квартира",hiddenPhone:"(ваш номер)",kind:{lead:"Хочет такой гид",changes:"Нужны правки"}},
+pl:{back:"← Wstecz",h1a:"Stwórz demo ",h1b:"przewodnika dla swojego mieszkania",lead:"Wypełnij to, co wiesz — wystarczy kilka pól. Podgląd zbuduje się sam w wybranym projekcie.",
+s1:"1. Projekt",dn:{classic:"Klasyczny",journal:"Magazyn",minimal:"Minimal",app:"Aplikacja"},s2:"2. Mieszkanie",f_name:"Nazwa mieszkania",f_addr:"Adres: ulica, numer, piętro, kod, miasto",f_in:"Zameldowanie od",f_out:"Wymeldowanie do",f_ssid:"Sieć Wi-Fi",f_pass:"Hasło Wi-Fi",passNote:"Hasło możesz pominąć: w prawdziwym przewodniku razem zdecydujemy, jak pokazać je bezpiecznie.",f_host:"Imię gospodarza dla gości",f_hosp:"Najbliższy szpital lub przychodnia",
+s3:"3. Treść",hint:"Jeden punkt w jednej linii. Pisz „Tytuł: tekst”, np. „Klucze: sejf po prawej od drzwi”.",
+f_arrive:"Jak wejść",f_home:"Mieszkanie i sprzęt",f_rules:"Zasady domu",f_leave:"Przed wyjazdem",f_near:"W pobliżu",f_eat:"Gdzie zjeść",f_road:"Dojazd",
+ph:{f_name:"Apartament nad morzem",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Wejście: niebieska furtka, potem winda na 3. piętro\nKlucze: sejf po prawej od drzwi\nParking: bezpłatnie na ulicy",f_home:"Klimatyzacja: pilot w szufladzie pod telewizorem\nPłyta indukcyjna: działa z garnkami z szafki\nW mieszkaniu: żelazko, suszarka, mikrofalówka, ręczniki",f_rules:"Cisza nocna: 23:00–8:00\nBasen: 10:00–21:00",f_leave:"Wyłączyć klimatyzację\nWynieść śmieci\nZostawić klucze w sejfie",f_near:"Plaża: 10 minut pieszo\nSupermarket: 5 minut pieszo",f_eat:"Śniadanie: Café Sol, widok na morze\nKolacja: La Marina, świeże ryby",f_road:"Lotnisko Alicante: około 45 minut samochodem\nTaxi: 965 712 277"},
+show:"Pokaż demo",empty:"Wypełnij kilka pól i naciśnij „Pokaż demo”.",
+prevNote:"To jest podgląd. Istnieje tylko na tym ekranie i tylko teraz: nie ma do niego linku i zniknie po zamknięciu strony.",exNote:"Puste sekcje pokazują przykładowy tekst.",fullNote:"Pełna wersja to 8 języków, Twoje zdjęcia, zalaminowana karta z kodem QR i działanie offline.",
+s5:"Podoba się? Wyślij zgłoszenie",f_you:"Twoje imię",f_method:"Jak się z Tobą skontaktować?",f_contact:"Twój numer, e-mail lub nazwa użytkownika",f_changes:"Co zmienić lub dodać?",
+consent:"Wyrażam zgodę na wykorzystanie moich danych do odpowiedzi na to zgłoszenie.",privacy:"Polityka prywatności",want:"Chcę taki przewodnik",changes:"Potrzebuję zmian lub uzupełnień",sendChanges:"Wyślij zmiany",
+sending:"Wysyłam…",ok:"Dziękuję! Wkrótce skontaktuję się wybraną drogą.",okUrgent:"Dziękuję! Mam Twoje zmiany i odezwę się jak najszybciej.",err:"Nie udało się wysłać. Sprawdź połączenie i spróbuj ponownie.",off:"Wysyłanie nie jest jeszcze włączone.",needContact:"Podaj, jak się z Tobą skontaktować.",needConsent:"Zaznacz zgodę.",needChanges:"Napisz, co zmienić.",
+defName:"Moje mieszkanie",hiddenPhone:"(Twój numer)",kind:{lead:"Chce przewodnik",changes:"Potrzebne zmiany"}},
+es:{back:"← Volver",h1a:"Crea una demo de ",h1b:"la guía de tu piso",lead:"Rellena lo que sepas: con unos pocos campos basta. La vista previa se crea sola con el diseño que elijas.",
+s1:"1. Diseño",dn:{classic:"Clásico",journal:"Revista",minimal:"Minimal",app:"App"},s2:"2. El piso",f_name:"Nombre del piso",f_addr:"Dirección: calle, número, piso, código postal, ciudad",f_in:"Entrada desde",f_out:"Salida antes de",f_ssid:"Red wifi",f_pass:"Contraseña wifi",passNote:"Puedes dejar la contraseña vacía: en la guía real decidiremos juntos cómo mostrarla de forma segura.",f_host:"Nombre del anfitrión",f_hosp:"Hospital o centro de salud más cercano",
+s3:"3. Contenido",hint:"Un punto por línea. Escribe «Título: texto», por ejemplo «Llaves: caja a la derecha de la puerta».",
+f_arrive:"Cómo entrar",f_home:"Piso y aparatos",f_rules:"Normas de la casa",f_leave:"Antes de salir",f_near:"Cerca",f_eat:"Dónde comer",f_road:"Cómo llegar",
+ph:{f_name:"Apartamento Vista Mar",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrada: cancela azul y ascensor al 3.º piso\nLlaves: caja a la derecha de la puerta\nAparcamiento: gratis en la calle",f_home:"Aire acondicionado: mando en el cajón de la tele\nPlaca de inducción: funciona con el menaje del armario\nEn el piso: plancha, secador, microondas, toallas",f_rules:"Silencio: de 23:00 a 8:00\nPiscina: de 10:00 a 21:00",f_leave:"Apagar el aire acondicionado\nSacar la basura\nDejar las llaves en la caja",f_near:"Playa: 10 minutos a pie\nSupermercado: 5 minutos a pie",f_eat:"Desayuno: Café Sol, vistas al mar\nCena: La Marina, pescado fresco",f_road:"Aeropuerto de Alicante: unos 45 minutos en coche\nTaxi: 965 712 277"},
+show:"Ver la demo",empty:"Rellena algunos campos y pulsa «Ver la demo».",
+prevNote:"Es una vista previa. Solo existe en esta pantalla y ahora mismo: no tiene enlace y desaparece al cerrar la página.",exNote:"Las secciones vacías muestran un texto de ejemplo.",fullNote:"La versión completa incluye 8 idiomas, tus fotos, un cartel plastificado con QR y modo sin conexión.",
+s5:"¿Te gusta? Envía la solicitud",f_you:"Tu nombre",f_method:"¿Cómo te contacto?",f_contact:"Tu número, email o usuario",f_changes:"¿Qué cambiar o añadir?",
+consent:"Acepto que mis datos se usen para responder a esta solicitud.",privacy:"Política de privacidad",want:"Quiero esta guía",changes:"Necesito cambios o añadidos",sendChanges:"Enviar cambios",
+sending:"Enviando…",ok:"¡Gracias! Te contactaré pronto por el medio que elegiste.",okUrgent:"¡Gracias! He recibido los cambios y te contactaré lo antes posible.",err:"No se pudo enviar. Revisa la conexión e inténtalo de nuevo.",off:"El envío aún no está activado.",needContact:"Indica cómo contactarte.",needConsent:"Marca la casilla de consentimiento.",needChanges:"Escribe qué hay que cambiar.",
+defName:"Mi piso",hiddenPhone:"(tu número)",kind:{lead:"Quiere la guía",changes:"Necesita cambios"}}
+};
+const TEXT_FIELDS = ["f_name","f_addr","f_in","f_out","f_ssid","f_pass","f_host","f_hosp","f_arrive","f_home","f_rules","f_leave","f_near","f_eat","f_road"];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $ = id => document.getElementById(id);
+let lang = "en", design = "app", shown = false, changesMode = false;
+try { const s = localStorage.getItem("gg-landing-lang"); if (L[s]) lang = s; } catch(e) {}
+{ const h = location.hash.slice(1); if (L[h]) lang = h; }
+
+function renderUI(){
+  const t = L[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => { if (typeof t[el.dataset.t] === "string") el.textContent = t[el.dataset.t]; });
+  $("h1").innerHTML = esc(t.h1a) + "<em>" + esc(t.h1b) + "</em>";
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  $("backLink").href = "index.html#" + lang;
+  for (const k in t.ph) $(k).placeholder = t.ph[k];
+  $("designs").innerHTML = DESIGNS.map(([k,img]) => `<label><input type="radio" name="design" value="${k}" ${k===design?"checked":""}><img src="${img}" alt="" onerror="this.src='img/${k}.png'">${esc(t.dn[k])}</label>`).join("");
+  document.querySelectorAll('input[name=design]').forEach(r => r.addEventListener("change", () => { design = r.value; if (shown) preview(); }));
+  $("changesBtn").textContent = changesMode ? t.sendChanges : t.changes;
+  if (shown) preview();
+}
+
+/* "Title: text" lines -> [title, text] */
+const pairs = v => v.split("\n").map(s => s.trim()).filter(Boolean).map(s => {
+  const i = s.search(/[:—–]/);
+  return i > 0 ? [s.slice(0,i).trim(), s.slice(i+1).trim()] : [s, ""];
+});
+const town = () => { const p = $("f_addr").value.split(",").map(s => s.trim()).filter(Boolean); return p.length ? p[p.length-1].replace(/^\d{5}\s*/, "") : ""; };
+
+function patch(){
+  const t = L[lang], tw = town(), q = n => tw ? n + ", " + tw : n;
+  const P = {lang, apt:{}, t:{}, eat:null, hosp:$("f_hosp").value.trim()};
+  P.apt.name = $("f_name").value.trim() || t.defName;
+  if ($("f_addr").value.trim()) P.apt.addr = $("f_addr").value.trim();
+  P.apt.checkin = $("f_in").value || "16:00";
+  P.apt.checkout = $("f_out").value || "11:00";
+  P.apt.wifi = {ssid: $("f_ssid").value.trim() || "—", pass: $("f_pass").value.trim() || "••••••"};
+  P.apt.host = {name: $("f_host").value.trim() || "—", phone: t.hiddenPhone, wa: ""};
+  const host = $("f_host").value.trim(); if (host) P.t.hostName = host;
+  for (const [f,key] of [["f_arrive","arrive"],["f_home","home"],["f_rules","rules"],["f_road","road"]]) {
+    const v = pairs($(f).value); if (v.length) P.t[key] = v.map(([a,b]) => [a, b]);
+  }
+  const lv = $("f_leave").value.split("\n").map(s => s.trim()).filter(Boolean); if (lv.length) P.t.leave = lv;
+  const nr = pairs($("f_near").value); if (nr.length) P.t.near = nr.map(([a,b]) => [a, b, q(a)]);
+  const et = pairs($("f_eat").value);
+  if (et.length) P.eat = et.map(([slot, rest]) => { const i = rest.indexOf(","); const n = i > 0 ? rest.slice(0,i).trim() : rest; const d = i > 0 ? rest.slice(i+1).trim() : ""; return [slot, n || slot, d, q(n || slot)]; });
+  return P;
+}
+
+const cache = {};
+async function demoSource(k){
+  if (cache[k]) return cache[k];
+  for (const url of [`demo-${k}.html`, `demo/${k}.html`]) {
+    try { const r = await fetch(url); if (r.ok) return cache[k] = await r.text(); } catch(e) {}
+  }
+  throw new Error("demo not found");
+}
+
+const OVERLAY = `<style>
+#__demo-mark{position:fixed;inset:0;pointer-events:none;z-index:99999;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#__demo-mark span{transform:rotate(-30deg);font:800 88px/1 system-ui,sans-serif;letter-spacing:.08em;color:rgba(184,86,106,.16);white-space:nowrap}
+</style><div id="__demo-mark" aria-hidden="true"><span>__MARK__</span></div>`;
+
+async function preview(){
+  const t = L[lang];
+  let src;
+  try { src = await demoSource(design); } catch(e) { $("empty").textContent = t.err; return; }
+  const P = patch();
+  const inject = `{ const P = ${JSON.stringify(P).replace(/</g,"\\u003c")};
+    Object.assign(APT, P.apt);
+    for (const k in T) { Object.assign(T[k], P.t); if (P.hosp && T[k].sos && T[k].sos[2]) T[k].sos[2] = [T[k].sos[2][0], P.hosp, P.hosp]; }
+    if (P.eat && typeof EAT !== "undefined") for (const k in EAT) EAT[k].items = P.eat;
+    if (T[P.lang]) lang = P.lang; }
+render();`;
+  let html = src
+    .replace("{ const h = location.hash.slice(1); if (T[h]) lang = h; }\nrender();", inject)
+    .replace("<h1>Mar Salado</h1>", "<h1>${esc(APT.name)}</h1>")
+    .replace("<b>Mar Salado · Guest Journal</b>", "<b>Guest Journal</b>")
+    .replace(/<script>if \("serviceWorker"[\s\S]*?<\/script>/, "")
+    .replace("</body>", OVERLAY.replace("__MARK__", lang === "ru" ? "ДЕМО" : "DEMO") + "</body>");
+  let fr = $("phone").querySelector("iframe");
+  if (!fr) {
+    fr = document.createElement("iframe");
+    fr.setAttribute("sandbox", "allow-scripts allow-popups");
+    fr.setAttribute("title", "Preview");
+    $("phone").appendChild(fr);
+  }
+  $("empty").hidden = true;
+  fr.srcdoc = html;
+  shown = true;
+}
+
+$("showBtn").addEventListener("click", () => { preview(); if (matchMedia("(max-width: 980px)").matches) $("phone").scrollIntoView({behavior:"smooth", block:"start"}); });
+let timer;
+document.querySelectorAll("#form input[type=text], #form input[type=time], #form textarea").forEach(el => el.addEventListener("input", () => {
+  if (!shown || el.closest("#sendBox")) return;
+  clearTimeout(timer); timer = setTimeout(preview, 600);
+}));
+
+function setStatus(msg, cls){ const s = $("status"); s.textContent = msg; s.className = "status " + (cls || ""); }
+
+async function send(kind){
+  const t = L[lang];
+  if (!$("f_contact").value.trim()) { setStatus(t.needContact, "bad"); $("f_contact").focus(); return; }
+  if (kind === "changes" && !$("f_changes").value.trim()) { setStatus(t.needChanges, "bad"); $("f_changes").focus(); return; }
+  if (!$("f_consent").checked) { setStatus(t.needConsent, "bad"); return; }
+  if (!ENDPOINT) { setStatus(t.off, "bad"); return; }
+  const fields = TEXT_FIELDS.map(id => [document.querySelector(`[data-t="${id}"]`).textContent, $(id).value.trim()]).filter(([,v]) => v);
+  fields.unshift([t.s1.replace(/^\d\.\s*/,""), t.dn[design]]);
+  const body = {kind, lang, name: $("f_you").value.trim(), method: $("f_method").value, contact: $("f_contact").value.trim(),
+    changes: $("f_changes").value.trim(), fields, website: $("website").value};
+  const btns = [$("wantBtn"), $("changesBtn")]; btns.forEach(b => b.disabled = true); setStatus(t.sending);
+  try {
+    const r = await fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+    if (!r.ok) throw new Error(r.status);
+    setStatus(kind === "changes" ? t.okUrgent : t.ok, "ok");
+  } catch(e) { setStatus(t.err, "bad"); }
+  btns.forEach(b => b.disabled = false);
+}
+$("wantBtn").addEventListener("click", () => send("lead"));
+$("changesBtn").addEventListener("click", () => {
+  if (!changesMode) { changesMode = true; $("changesBox").hidden = false; $("changesBtn").textContent = L[lang].sendChanges; $("f_changes").focus(); return; }
+  send("changes");
+});
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.l; try { localStorage.setItem("gg-landing-lang", lang); } catch(e) {} renderUI();
+}));
+renderUI();
+</script>
+
+</body>
+</html>
