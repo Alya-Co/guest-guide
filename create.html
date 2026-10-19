@@ -81,6 +81,17 @@ textarea{min-height:110px;resize:vertical}
 .status.ok{color:var(--ok)} .status.bad{color:var(--bad)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 #changesBox[hidden]{display:none}
+.secs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.secs{grid-template-columns:minmax(0,1fr)}}
+.sec{background:var(--page);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sec.full{grid-column:1/-1}
+.sec.own{border:1.5px dashed var(--accent)}
+.sec .ttl{font-size:14px;font-weight:500}
+.sec.off{opacity:.62}
+.std{display:flex;gap:9px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
+.std input{width:18px;height:18px;margin:0;accent-color:var(--accent);flex:none}
+.qbtns{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.qb{font:600 14px/1 var(--f-body);color:var(--ink);background:var(--page);border:1px solid var(--rule);border-radius:999px;padding:10px 14px;cursor:pointer}
 </style>
 
 <div class="bar"><div class="in">
@@ -112,8 +123,6 @@ textarea{min-height:110px;resize:vertical}
         <label class="f"><span data-t="f_ssid"></span><input type="text" id="f_ssid" maxlength="60"></label>
         <label class="f"><span data-t="f_pass"></span><input type="text" id="f_pass" maxlength="60" autocomplete="off"></label>
         <p class="small full" style="grid-column:1/-1;margin:0" data-t="passNote"></p>
-        <label class="f"><span data-t="f_binsM"></span><input type="number" id="f_binsM" min="0" max="5000" step="5" inputmode="numeric"></label>
-        <label class="f"><span data-t="f_binsWhere"></span><input type="text" id="f_binsWhere" maxlength="120"></label>
         <label class="f"><span data-t="f_host"></span><input type="text" id="f_host" maxlength="60"></label>
         <label class="f"><span data-t="f_hosp"></span><input type="text" id="f_hosp" maxlength="120"></label>
       </div>
@@ -122,14 +131,55 @@ textarea{min-height:110px;resize:vertical}
     <fieldset>
       <legend data-t="s3"></legend>
       <p class="hint" data-t="hint"></p>
-      <div class="grid2">
-        <label class="f full"><span data-t="f_arrive"></span><textarea id="f_arrive" maxlength="1500"></textarea></label>
-        <label class="f full"><span data-t="f_home"></span><textarea id="f_home" maxlength="1500"></textarea></label>
-        <label class="f"><span data-t="f_rules"></span><textarea id="f_rules" maxlength="1000"></textarea></label>
-        <label class="f"><span data-t="f_leave"></span><textarea id="f_leave" maxlength="1000"></textarea></label>
-        <label class="f"><span data-t="f_near"></span><textarea id="f_near" maxlength="1500"></textarea></label>
-        <label class="f"><span data-t="f_eat"></span><textarea id="f_eat" maxlength="1000"></textarea></label>
-        <label class="f full"><span data-t="f_road"></span><textarea id="f_road" maxlength="1000"></textarea></label>
+      <div class="qbtns">
+        <button type="button" class="qb" id="allDemo" data-t="allDemo"></button>
+        <button type="button" class="qb" id="noDemo" data-t="noDemo"></button>
+      </div>
+      <div class="secs">
+        <div class="sec full" data-sec="arrive">
+          <label class="f"><span data-t="f_arrive"></span><textarea id="f_arrive" maxlength="1500"></textarea></label>
+          <p class="small" style="margin:0" data-t="ownOnly"></p>
+        </div>
+        <div class="sec full" data-sec="home">
+          <label class="f"><span data-t="f_home"></span><textarea id="f_home" maxlength="1500"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_home" data-std="home"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec full" data-sec="bins">
+          <span class="ttl" data-t="binsT"></span>
+          <div class="grid2">
+            <label class="f"><span data-t="f_binsM"></span><input type="number" id="f_binsM" min="0" max="5000" step="5" inputmode="numeric"></label>
+            <label class="f"><span data-t="f_binsWhere"></span><input type="text" id="f_binsWhere" maxlength="120"></label>
+          </div>
+          <label class="std"><input type="checkbox" id="std_bins" data-std="bins"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="rules">
+          <label class="f"><span data-t="f_rules"></span><textarea id="f_rules" maxlength="1000"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_rules" data-std="rules"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="leave">
+          <label class="f"><span data-t="f_leave"></span><textarea id="f_leave" maxlength="1000"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_leave" data-std="leave"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="near">
+          <label class="f"><span data-t="f_near"></span><textarea id="f_near" maxlength="1500"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_near" data-std="near"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="eat">
+          <label class="f"><span data-t="f_eat"></span><textarea id="f_eat" maxlength="1000"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_eat" data-std="eat"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="road">
+          <label class="f"><span data-t="f_road"></span><textarea id="f_road" maxlength="1000"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_road" data-std="road"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec" data-sec="extras">
+          <label class="f"><span data-t="f_extras"></span><textarea id="f_extras" maxlength="600"></textarea></label>
+          <label class="std"><input type="checkbox" id="std_extras" data-std="extras"><span data-t="asDemo"></span></label>
+        </div>
+        <div class="sec full own" data-sec="custom">
+          <label class="f"><span data-t="f_custom"></span><textarea id="f_custom" maxlength="2000"></textarea></label>
+          <p class="small" style="margin:0" data-t="customNote"></p>
+        </div>
       </div>
     </fieldset>
 
@@ -171,50 +221,58 @@ const DESIGNS = [["classic","img-classic.png"],["journal","img-journal.png"],["m
 const L = {
 en:{back:"← Back",h1a:"Create a demo of ",h1b:"your guest guide",lead:"Fill in what you know — even a few fields are enough. The preview builds itself in the design you choose.",
 s1:"1. Design",dn:{classic:"Classic",journal:"Journal",minimal:"Minimal",app:"App"},s2:"2. The apartment",f_name:"Apartment name",f_addr:"Address: street, number, floor, postcode, town",f_in:"Check-in from",f_out:"Check-out by",f_ssid:"Wi-Fi network",f_pass:"Wi-Fi password",passNote:"You can leave the password empty: in the real guide we'll decide together how to show it safely.",f_binsM:"Rubbish bins: metres from the building",f_binsWhere:"Where exactly",f_host:"Host name for guests",f_hosp:"Nearest hospital or clinic",
-s3:"3. Content",hint:"One item per line. Write “Title: text”, for example “Keys: key safe to the right of the door”.",
+s3:"3. Content",hint:"One item per line: “Title: text”. Tick “Keep as in the demo” if a section suits you unchanged. A section left empty and unticked won't appear in the guide.",
 f_arrive:"How to get in",f_home:"Apartment and appliances",f_rules:"House rules",f_leave:"Before check-out",f_near:"Places nearby",f_eat:"Where to eat",f_road:"Getting here",
-ph:{f_name:"Sea View Apartment",f_binsM:"30",f_binsWhere:"opposite the entrance",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrance: blue gate, then the lift to the 3rd floor\nKeys: key safe to the right of the door\nParking: free on the street",f_home:"Air conditioning: remote in the TV drawer\nInduction hob: works with the pans in the cupboard\nIn the flat: iron, hairdryer, microwave, towels",f_rules:"Quiet hours: 23:00–8:00\nPool: 10:00–21:00",f_leave:"Switch off the air conditioning\nTake the rubbish out\nLeave the keys in the safe",f_near:"Beach: 10 minutes on foot\nSupermarket: 5 minutes on foot",f_eat:"La Marina: English breakfasts with a sea view, from 10:00\nLa Luna: grilled seafood, 10 minutes on foot",f_road:"Alicante airport: about 45 minutes by car\nTaxi: 965 712 277"},
+asDemo:"Keep as in the demo",ownOnly:"Only your own text: this section is different for every apartment.",allDemo:"Everything as in the demo",noDemo:"Clear the ticks",binsT:"Rubbish bins",f_extras:"Extras for guests (transfer, late check-out…)",f_custom:"Your own items — anything not listed above",customNote:"Becomes a separate “Good to know” section in your guide.",asDemoVal:"As in the demo",notNeeded:"Sections not needed",
+ph:{f_extras:"Airport transfer: 45 €\nLate check-out: 20 €",f_custom:"Pool: open June to September\nPets: welcome on request",f_name:"Sea View Apartment",f_binsM:"30",f_binsWhere:"opposite the entrance",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrance: blue gate, then the lift to the 3rd floor\nKeys: key safe to the right of the door\nParking: free on the street",f_home:"Air conditioning: remote in the TV drawer\nInduction hob: works with the pans in the cupboard\nIn the flat: iron, hairdryer, microwave, towels",f_rules:"Quiet hours: 23:00–8:00\nPool: 10:00–21:00",f_leave:"Switch off the air conditioning\nTake the rubbish out\nLeave the keys in the safe",f_near:"Beach: 10 minutes on foot\nSupermarket: 5 minutes on foot",f_eat:"La Marina: English breakfasts with a sea view, from 10:00\nLa Luna: grilled seafood, 10 minutes on foot",f_road:"Alicante airport: about 45 minutes by car\nTaxi: 965 712 277"},
 show:"Show the demo",empty:"Fill in a few fields and press “Show the demo”.",
-prevNote:"This is a preview. It exists only on this screen, right now: there is no link to it, and it disappears when you close the page.",exNote:"Sections you left empty show sample text.",fullNote:"The full guide adds 8 languages, your photos, a laminated card with a QR code and offline mode.",
+prevNote:"This is a preview. It exists only on this screen, right now: there is no link to it, and it disappears when you close the page.",exNote:"Empty sections without “Keep as in the demo” are left out of the guide.",fullNote:"The full guide adds 8 languages, your photos, a laminated card with a QR code and offline mode.",
 s5:"Like it? Send a request",f_you:"Your name",f_method:"How should I contact you?",f_contact:"Your number, email or username",f_changes:"What should be changed or added?",
 consent:"I agree that my details are used to reply to this request.",privacy:"Privacy policy",want:"I want this guide",changes:"I need changes or additions",sendChanges:"Send changes",
 sending:"Sending…",ok:"Thank you! I'll contact you soon in the way you chose.",okUrgent:"Thank you! I've got your changes and will contact you as soon as possible.",err:"Couldn't send. Check your connection and try again.",off:"Sending isn't switched on yet.",needContact:"Add how I can contact you.",needConsent:"Please tick the consent box.",needChanges:"Write what should be changed.",
 defName:"My apartment",hiddenPhone:"(your number)",kind:{lead:"I want this guide",changes:"Needs changes"}},
 ru:{back:"← Назад",h1a:"Создайте демо ",h1b:"гида для своей квартиры",lead:"Заполните то, что знаете, — хватит и нескольких полей. Предпросмотр соберётся сам в выбранном дизайне.",
 s1:"1. Дизайн",dn:{classic:"Классика",journal:"Журнал",minimal:"Минимал",app:"Приложение"},s2:"2. Квартира",f_name:"Название квартиры",f_addr:"Адрес: улица, дом, этаж, индекс, город",f_in:"Заезд с",f_out:"Выезд до",f_ssid:"Сеть Wi-Fi",f_pass:"Пароль Wi-Fi",passNote:"Пароль можно не указывать: в настоящем гиде вместе решим, как показать его безопасно.",f_binsM:"Мусорные контейнеры: сколько метров от дома",f_binsWhere:"Где именно",f_host:"Имя хозяина для гостей",f_hosp:"Ближайшая больница или клиника",
-s3:"3. Содержание",hint:"Один пункт — одна строка. Пишите «Заголовок: текст», например «Ключи: сейф справа от двери».",
+s3:"3. Содержание",hint:"Один пункт — одна строка: «Заголовок: текст». Отметьте «Оставить как в демо», если раздел подходит без изменений. Пустой и неотмеченный раздел в гид не попадёт.",
 f_arrive:"Как войти",f_home:"Квартира и техника",f_rules:"Правила дома",f_leave:"Перед выездом",f_near:"Что рядом",f_eat:"Где поесть",f_road:"Как добраться",
-ph:{f_name:"Апартаменты у моря",f_binsM:"30",f_binsWhere:"напротив входа в дом",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Вход: синяя калитка, дальше лифт на 3-й этаж\nКлючи: сейф справа от двери\nПарковка: бесплатно на улице",f_home:"Кондиционер: пульт в ящике у телевизора\nИндукционная плита: работает с посудой из шкафа\nВ квартире: утюг, фен, микроволновка, полотенца",f_rules:"Тишина: с 23:00 до 8:00\nБассейн: с 10:00 до 21:00",f_leave:"Выключить кондиционер\nВынести мусор\nОставить ключи в сейфе",f_near:"Пляж: 10 минут пешком\nСупермаркет: 5 минут пешком",f_eat:"La Marina: английские завтраки с видом на море, с 10:00\nLa Luna: морепродукты на углях, 10 минут пешком",f_road:"Аэропорт Аликанте: около 45 минут на машине\nТакси: 965 712 277"},
+asDemo:"Оставить как в демо",ownOnly:"Только ваш текст: этот раздел у каждой квартиры свой.",allDemo:"Всё как в демо",noDemo:"Снять все отметки",binsT:"Мусорные контейнеры",f_extras:"Допуслуги для гостей (трансфер, поздний выезд…)",f_custom:"Свои пункты — всё, чего нет выше",customNote:"Станет отдельным разделом «Ещё полезное» в вашем гиде.",asDemoVal:"Как в демо",notNeeded:"Не нужны разделы",
+ph:{f_extras:"Трансфер из аэропорта: 45 €\nПоздний выезд: 20 €",f_custom:"Бассейн: открыт с июня по сентябрь\nДомашние животные: можно по договорённости",f_name:"Апартаменты у моря",f_binsM:"30",f_binsWhere:"напротив входа в дом",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Вход: синяя калитка, дальше лифт на 3-й этаж\nКлючи: сейф справа от двери\nПарковка: бесплатно на улице",f_home:"Кондиционер: пульт в ящике у телевизора\nИндукционная плита: работает с посудой из шкафа\nВ квартире: утюг, фен, микроволновка, полотенца",f_rules:"Тишина: с 23:00 до 8:00\nБассейн: с 10:00 до 21:00",f_leave:"Выключить кондиционер\nВынести мусор\nОставить ключи в сейфе",f_near:"Пляж: 10 минут пешком\nСупермаркет: 5 минут пешком",f_eat:"La Marina: английские завтраки с видом на море, с 10:00\nLa Luna: морепродукты на углях, 10 минут пешком",f_road:"Аэропорт Аликанте: около 45 минут на машине\nТакси: 965 712 277"},
 show:"Показать демо",empty:"Заполните несколько полей и нажмите «Показать демо».",
-prevNote:"Это предпросмотр. Он существует только на этом экране и только сейчас: ссылки на него нет, и он исчезнет, когда вы закроете страницу.",exNote:"Разделы, которые вы не заполнили, показаны на примере.",fullNote:"В полной версии — 8 языков, ваши фото, ламинированная табличка с QR-кодом и работа без интернета.",
+prevNote:"Это предпросмотр. Он существует только на этом экране и только сейчас: ссылки на него нет, и он исчезнет, когда вы закроете страницу.",exNote:"Пустые разделы без отметки «Оставить как в демо» в гид не попадают.",fullNote:"В полной версии — 8 языков, ваши фото, ламинированная табличка с QR-кодом и работа без интернета.",
 s5:"Понравилось? Отправьте заявку",f_you:"Ваше имя",f_method:"Как с вами связаться?",f_contact:"Ваш номер, почта или ник",f_changes:"Что изменить или добавить?",
 consent:"Даю согласие на использование моих данных для ответа на заявку.",privacy:"Политика конфиденциальности",want:"Хочу такой гид",changes:"Нужны правки или дополнения",sendChanges:"Отправить правки",
 sending:"Отправляю…",ok:"Спасибо! Я скоро свяжусь с вами выбранным способом.",okUrgent:"Спасибо! Правки получены, свяжусь с вами в ближайшее время.",err:"Не получилось отправить. Проверьте связь и попробуйте ещё раз.",off:"Отправка пока не подключена.",needContact:"Укажите, как с вами связаться.",needConsent:"Поставьте галочку согласия.",needChanges:"Напишите, что нужно изменить.",
 defName:"Моя квартира",hiddenPhone:"(ваш номер)",kind:{lead:"Хочет такой гид",changes:"Нужны правки"}},
 pl:{back:"← Wstecz",h1a:"Stwórz demo ",h1b:"przewodnika dla swojego mieszkania",lead:"Wypełnij to, co wiesz — wystarczy kilka pól. Podgląd zbuduje się sam w wybranym projekcie.",
 s1:"1. Projekt",dn:{classic:"Klasyczny",journal:"Magazyn",minimal:"Minimal",app:"Aplikacja"},s2:"2. Mieszkanie",f_name:"Nazwa mieszkania",f_addr:"Adres: ulica, numer, piętro, kod, miasto",f_in:"Zameldowanie od",f_out:"Wymeldowanie do",f_ssid:"Sieć Wi-Fi",f_pass:"Hasło Wi-Fi",passNote:"Hasło możesz pominąć: w prawdziwym przewodniku razem zdecydujemy, jak pokazać je bezpiecznie.",f_binsM:"Kontenery na śmieci: ile metrów od budynku",f_binsWhere:"Gdzie dokładnie",f_host:"Imię gospodarza dla gości",f_hosp:"Najbliższy szpital lub przychodnia",
-s3:"3. Treść",hint:"Jeden punkt w jednej linii. Pisz „Tytuł: tekst”, np. „Klucze: sejf po prawej od drzwi”.",
+s3:"3. Treść",hint:"Jeden punkt w linii: „Tytuł: tekst”. Zaznacz „Zostaw jak w demo”, jeśli sekcja pasuje bez zmian. Pusta i niezaznaczona sekcja nie pojawi się w przewodniku.",
 f_arrive:"Jak wejść",f_home:"Mieszkanie i sprzęt",f_rules:"Zasady domu",f_leave:"Przed wyjazdem",f_near:"W pobliżu",f_eat:"Gdzie zjeść",f_road:"Dojazd",
-ph:{f_name:"Apartament nad morzem",f_binsM:"30",f_binsWhere:"naprzeciwko wejścia",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Wejście: niebieska furtka, potem winda na 3. piętro\nKlucze: sejf po prawej od drzwi\nParking: bezpłatnie na ulicy",f_home:"Klimatyzacja: pilot w szufladzie pod telewizorem\nPłyta indukcyjna: działa z garnkami z szafki\nW mieszkaniu: żelazko, suszarka, mikrofalówka, ręczniki",f_rules:"Cisza nocna: 23:00–8:00\nBasen: 10:00–21:00",f_leave:"Wyłączyć klimatyzację\nWynieść śmieci\nZostawić klucze w sejfie",f_near:"Plaża: 10 minut pieszo\nSupermarket: 5 minut pieszo",f_eat:"La Marina: angielskie śniadania z widokiem na morze, od 10:00\nLa Luna: owoce morza z grilla, 10 minut pieszo",f_road:"Lotnisko Alicante: około 45 minut samochodem\nTaxi: 965 712 277"},
+asDemo:"Zostaw jak w demo",ownOnly:"Tylko Twój tekst: ta sekcja jest inna w każdym mieszkaniu.",allDemo:"Wszystko jak w demo",noDemo:"Odznacz wszystko",binsT:"Kontenery na śmieci",f_extras:"Usługi dodatkowe (transfer, późne wymeldowanie…)",f_custom:"Własne punkty — wszystko, czego nie ma wyżej",customNote:"Stanie się osobną sekcją „Warto wiedzieć” w Twoim przewodniku.",asDemoVal:"Jak w demo",notNeeded:"Niepotrzebne sekcje",
+ph:{f_extras:"Transfer z lotniska: 45 €\nPóźne wymeldowanie: 20 €",f_custom:"Basen: czynny od czerwca do września\nZwierzęta: po wcześniejszym uzgodnieniu",f_name:"Apartament nad morzem",f_binsM:"30",f_binsWhere:"naprzeciwko wejścia",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Wejście: niebieska furtka, potem winda na 3. piętro\nKlucze: sejf po prawej od drzwi\nParking: bezpłatnie na ulicy",f_home:"Klimatyzacja: pilot w szufladzie pod telewizorem\nPłyta indukcyjna: działa z garnkami z szafki\nW mieszkaniu: żelazko, suszarka, mikrofalówka, ręczniki",f_rules:"Cisza nocna: 23:00–8:00\nBasen: 10:00–21:00",f_leave:"Wyłączyć klimatyzację\nWynieść śmieci\nZostawić klucze w sejfie",f_near:"Plaża: 10 minut pieszo\nSupermarket: 5 minut pieszo",f_eat:"La Marina: angielskie śniadania z widokiem na morze, od 10:00\nLa Luna: owoce morza z grilla, 10 minut pieszo",f_road:"Lotnisko Alicante: około 45 minut samochodem\nTaxi: 965 712 277"},
 show:"Pokaż demo",empty:"Wypełnij kilka pól i naciśnij „Pokaż demo”.",
-prevNote:"To jest podgląd. Istnieje tylko na tym ekranie i tylko teraz: nie ma do niego linku i zniknie po zamknięciu strony.",exNote:"Puste sekcje pokazują przykładowy tekst.",fullNote:"Pełna wersja to 8 języków, Twoje zdjęcia, zalaminowana karta z kodem QR i działanie offline.",
+prevNote:"To jest podgląd. Istnieje tylko na tym ekranie i tylko teraz: nie ma do niego linku i zniknie po zamknięciu strony.",exNote:"Puste sekcje bez zaznaczenia „Zostaw jak w demo” nie trafiają do przewodnika.",fullNote:"Pełna wersja to 8 języków, Twoje zdjęcia, zalaminowana karta z kodem QR i działanie offline.",
 s5:"Podoba się? Wyślij zgłoszenie",f_you:"Twoje imię",f_method:"Jak się z Tobą skontaktować?",f_contact:"Twój numer, e-mail lub nazwa użytkownika",f_changes:"Co zmienić lub dodać?",
 consent:"Wyrażam zgodę na wykorzystanie moich danych do odpowiedzi na to zgłoszenie.",privacy:"Polityka prywatności",want:"Chcę taki przewodnik",changes:"Potrzebuję zmian lub uzupełnień",sendChanges:"Wyślij zmiany",
 sending:"Wysyłam…",ok:"Dziękuję! Wkrótce skontaktuję się wybraną drogą.",okUrgent:"Dziękuję! Mam Twoje zmiany i odezwę się jak najszybciej.",err:"Nie udało się wysłać. Sprawdź połączenie i spróbuj ponownie.",off:"Wysyłanie nie jest jeszcze włączone.",needContact:"Podaj, jak się z Tobą skontaktować.",needConsent:"Zaznacz zgodę.",needChanges:"Napisz, co zmienić.",
 defName:"Moje mieszkanie",hiddenPhone:"(Twój numer)",kind:{lead:"Chce przewodnik",changes:"Potrzebne zmiany"}},
 es:{back:"← Volver",h1a:"Crea una demo de ",h1b:"la guía de tu piso",lead:"Rellena lo que sepas: con unos pocos campos basta. La vista previa se crea sola con el diseño que elijas.",
 s1:"1. Diseño",dn:{classic:"Clásico",journal:"Revista",minimal:"Minimal",app:"App"},s2:"2. El piso",f_name:"Nombre del piso",f_addr:"Dirección: calle, número, piso, código postal, ciudad",f_in:"Entrada desde",f_out:"Salida antes de",f_ssid:"Red wifi",f_pass:"Contraseña wifi",passNote:"Puedes dejar la contraseña vacía: en la guía real decidiremos juntos cómo mostrarla de forma segura.",f_binsM:"Contenedores: metros desde el edificio",f_binsWhere:"Dónde exactamente",f_host:"Nombre del anfitrión",f_hosp:"Hospital o centro de salud más cercano",
-s3:"3. Contenido",hint:"Un punto por línea. Escribe «Título: texto», por ejemplo «Llaves: caja a la derecha de la puerta».",
+s3:"3. Contenido",hint:"Un punto por línea: «Título: texto». Marca «Dejar como en la demo» si un apartado te sirve tal cual. Un apartado vacío y sin marcar no aparecerá en la guía.",
 f_arrive:"Cómo entrar",f_home:"Piso y aparatos",f_rules:"Normas de la casa",f_leave:"Antes de salir",f_near:"Cerca",f_eat:"Dónde comer",f_road:"Cómo llegar",
-ph:{f_name:"Apartamento Vista Mar",f_binsM:"30",f_binsWhere:"frente al portal",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrada: cancela azul y ascensor al 3.º piso\nLlaves: caja a la derecha de la puerta\nAparcamiento: gratis en la calle",f_home:"Aire acondicionado: mando en el cajón de la tele\nPlaca de inducción: funciona con el menaje del armario\nEn el piso: plancha, secador, microondas, toallas",f_rules:"Silencio: de 23:00 a 8:00\nPiscina: de 10:00 a 21:00",f_leave:"Apagar el aire acondicionado\nSacar la basura\nDejar las llaves en la caja",f_near:"Playa: 10 minutos a pie\nSupermercado: 5 minutos a pie",f_eat:"La Marina: desayunos ingleses con vistas al mar, desde las 10:00\nLa Luna: marisco a la brasa, a 10 minutos a pie",f_road:"Aeropuerto de Alicante: unos 45 minutos en coche\nTaxi: 965 712 277"},
+asDemo:"Dejar como en la demo",ownOnly:"Solo tu texto: este apartado es distinto en cada piso.",allDemo:"Todo como en la demo",noDemo:"Quitar las marcas",binsT:"Contenedores de basura",f_extras:"Servicios extra (traslado, salida tardía…)",f_custom:"Tus propios puntos: todo lo que no esté arriba",customNote:"Se convertirá en un apartado «Más información» en tu guía.",asDemoVal:"Como en la demo",notNeeded:"Apartados no necesarios",
+ph:{f_extras:"Traslado al aeropuerto: 45 €\nSalida tardía: 20 €",f_custom:"Piscina: abierta de junio a septiembre\nMascotas: bajo petición",f_name:"Apartamento Vista Mar",f_binsM:"30",f_binsWhere:"frente al portal",f_addr:"Calle del Mar 5, 2ºA, 03181 Torrevieja",f_arrive:"Entrada: cancela azul y ascensor al 3.º piso\nLlaves: caja a la derecha de la puerta\nAparcamiento: gratis en la calle",f_home:"Aire acondicionado: mando en el cajón de la tele\nPlaca de inducción: funciona con el menaje del armario\nEn el piso: plancha, secador, microondas, toallas",f_rules:"Silencio: de 23:00 a 8:00\nPiscina: de 10:00 a 21:00",f_leave:"Apagar el aire acondicionado\nSacar la basura\nDejar las llaves en la caja",f_near:"Playa: 10 minutos a pie\nSupermercado: 5 minutos a pie",f_eat:"La Marina: desayunos ingleses con vistas al mar, desde las 10:00\nLa Luna: marisco a la brasa, a 10 minutos a pie",f_road:"Aeropuerto de Alicante: unos 45 minutos en coche\nTaxi: 965 712 277"},
 show:"Ver la demo",empty:"Rellena algunos campos y pulsa «Ver la demo».",
-prevNote:"Es una vista previa. Solo existe en esta pantalla y ahora mismo: no tiene enlace y desaparece al cerrar la página.",exNote:"Las secciones vacías muestran un texto de ejemplo.",fullNote:"La versión completa incluye 8 idiomas, tus fotos, un cartel plastificado con QR y modo sin conexión.",
+prevNote:"Es una vista previa. Solo existe en esta pantalla y ahora mismo: no tiene enlace y desaparece al cerrar la página.",exNote:"Los apartados vacíos sin «Dejar como en la demo» no aparecen en la guía.",fullNote:"La versión completa incluye 8 idiomas, tus fotos, un cartel plastificado con QR y modo sin conexión.",
 s5:"¿Te gusta? Envía la solicitud",f_you:"Tu nombre",f_method:"¿Cómo te contacto?",f_contact:"Tu número, email o usuario",f_changes:"¿Qué cambiar o añadir?",
 consent:"Acepto que mis datos se usen para responder a esta solicitud.",privacy:"Política de privacidad",want:"Quiero esta guía",changes:"Necesito cambios o añadidos",sendChanges:"Enviar cambios",
 sending:"Enviando…",ok:"¡Gracias! Te contactaré pronto por el medio que elegiste.",okUrgent:"¡Gracias! He recibido los cambios y te contactaré lo antes posible.",err:"No se pudo enviar. Revisa la conexión e inténtalo de nuevo.",off:"El envío aún no está activado.",needContact:"Indica cómo contactarte.",needConsent:"Marca la casilla de consentimiento.",needChanges:"Escribe qué hay que cambiar.",
 defName:"Mi piso",hiddenPhone:"(tu número)",kind:{lead:"Quiere la guía",changes:"Necesita cambios"}}
 };
-const TEXT_FIELDS = ["f_name","f_addr","f_in","f_out","f_ssid","f_pass","f_binsM","f_binsWhere","f_host","f_hosp","f_arrive","f_home","f_rules","f_leave","f_near","f_eat","f_road"];
+const BASE_FIELDS = ["f_name","f_addr","f_in","f_out","f_ssid","f_pass","f_host","f_hosp"];
+const SECS = ["arrive","home","bins","rules","leave","near","eat","road","extras"];
+const CUSTOM_T = {ru:"Ещё полезное",uk:"Ще корисне",en:"Good to know",es:"Más información",pl:"Warto wiedzieć",fr:"Bon à savoir",nl:"Goed om te weten",sv:"Bra att veta"};
+const filled = sec => sec === "bins" ? !!($("f_binsM").value.trim() || $("f_binsWhere").value.trim()) : !!$("f_" + sec).value.trim();
+const std = sec => !!(document.getElementById("std_" + sec) || {}).checked;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const $ = id => document.getElementById(id);
 let lang = "en", design = "app", shown = false, changesMode = false;
@@ -266,7 +324,12 @@ function patch(){
   const et = pairs($("f_eat").value);
   if (et.length) P.eat = et.map(([title, text]) => ["", title, text, q(title || text.slice(0, 50))]);
   const bm = $("f_binsM").value.trim(), bw = $("f_binsWhere").value.trim().replace(/[.。]$/, "");
-  P.bins = BINS[lang](bm, bw);
+  P.bins = (bm || bw) ? BINS[lang](bm, bw) : null;
+  const ex = pairs($("f_extras").value);
+  P.extras = ex.length ? ex.map(([a,b]) => a ? [a, b] : [b, ""]) : null;
+  P.custom = pairs($("f_custom").value);
+  P.customTitle = CUSTOM_T;
+  P.hide = SECS.filter(sec => !filled(sec) && !std(sec));
   return P;
 }
 
@@ -291,9 +354,39 @@ async function preview(){
   const P = patch();
   const inject = `{ const P = ${JSON.stringify(P).replace(/</g,"\\u003c")};
     Object.assign(APT, P.apt);
-    for (const k in T) { Object.assign(T[k], P.t); T[k].binsIntro = P.bins; if (!P.t.leave && T[k].leave) T[k].leave = T[k].leave.map(x => x.replace(/ (на углу|на розі|on the corner|na rogu|de la esquina|au coin|op de hoek|på hörnet)/, "")); if (P.hosp && T[k].sos && T[k].sos[2]) T[k].sos[2] = [T[k].sos[2][0], P.hosp, P.hosp]; }
+    for (const k in T) { Object.assign(T[k], P.t); if (P.bins) T[k].binsIntro = P.bins; if (!P.t.leave && T[k].leave) T[k].leave = T[k].leave.map(x => x.replace(/ (на углу|на розі|on the corner|na rogu|de la esquina|au coin|op de hoek|på hörnet)/, "")); if (P.hosp && T[k].sos && T[k].sos[2]) T[k].sos[2] = [T[k].sos[2][0], P.hosp, P.hosp]; }
     if (P.eat && typeof EAT !== "undefined") for (const k in EAT) EAT[k].items = P.eat;
-    if (T[P.lang]) lang = P.lang; }
+    if (P.extras) { APT.extras = P.extras.map((e,i) => ["c"+i, e[1]]); for (const k in T) { T[k].extras = Object.assign({}, T[k].extras); P.extras.forEach((e,i) => T[k].extras["c"+i] = e[0]); } }
+    if (T[P.lang]) lang = P.lang;
+    const __HIDE = new Set(P.hide);
+    const __title = id => { const t = T[lang]; return id === "eat" ? (typeof EAT !== "undefined" ? EAT[lang].title : "") : id === "extras" ? t.extrasT : (t.nav || {})[id]; };
+    const __find = id => { const direct = document.querySelector('section#' + id + ', details[data-id="' + id + '"]'); if (direct) return direct;
+      const h = [...document.querySelectorAll("section.tile > h2")].find(x => x.textContent === __title(id)); return h ? h.parentElement : null; };
+    const __apply = () => {
+      if (P.custom.length && !document.getElementById("__custom")) {
+        const tpl = __find("home") || __find("rules");
+        if (tpl) {
+          const c = tpl.cloneNode(true); c.id = "__custom"; c.removeAttribute("data-id");
+          const head = c.querySelector("h2, summary"); if (head) head.textContent = P.customTitle[lang] || P.customTitle.en;
+          const first = c.querySelector("li, .entry, .item, .r");
+          if (first) {
+            const box = first.parentElement; box.querySelectorAll(":scope > li, :scope > .entry, :scope > .item, :scope > .r").forEach(n => n.remove());
+            for (const [a, b] of P.custom) { const it = first.cloneNode(true); it.querySelectorAll("a, small").forEach(n => n.remove());
+              const tt = it.querySelector("b, h3"), tx = it.querySelector("span, p");
+              if (tt) { if (a) tt.textContent = a; else tt.remove(); } if (tx) tx.textContent = b; box.appendChild(it); }
+          }
+          const after = __find("leave") || tpl; after.after(c);
+        }
+      }
+      for (const id of __HIDE) {
+        if (id === "extras") { document.querySelectorAll(".extra, .offer").forEach(n => n.remove());
+          document.querySelectorAll(".extras > h2, .concierge h2, .end > h2").forEach(n => n.remove());
+          const tile = [...document.querySelectorAll("section.tile > h2")].find(x => x.textContent === __title("extras")); if (tile) tile.parentElement.remove(); continue; }
+        const el = __find(id); if (el) el.remove();
+        document.querySelectorAll('a[href="#' + id + '"]').forEach(n => n.remove());
+      }
+    };
+    const __render = render; render = function(){ __render(); __apply(); }; }
 render();`;
   let html = src
     .replace("{ const h = location.hash.slice(1); if (T[h]) lang = h; }\nrender();", inject)
@@ -328,8 +421,19 @@ async function send(kind){
   if (kind === "changes" && !$("f_changes").value.trim()) { setStatus(t.needChanges, "bad"); $("f_changes").focus(); return; }
   if (!$("f_consent").checked) { setStatus(t.needConsent, "bad"); return; }
   if (!ENDPOINT) { setStatus(t.off, "bad"); return; }
-  const fields = TEXT_FIELDS.map(id => [document.querySelector(`[data-t="${id}"]`).textContent, $(id).value.trim()]).filter(([,v]) => v);
-  fields.unshift([t.s1.replace(/^\d\.\s*/,""), t.dn[design]]);
+  const lab = id => (document.querySelector(`[data-t="${id}"]`) || {}).textContent || id;
+  const fields = [[t.s1.replace(/^\d\.\s*/,""), t.dn[design]]];
+  BASE_FIELDS.forEach(id => { const v = $(id).value.trim(); if (v) fields.push([lab(id), v]); });
+  const skipped = [];
+  for (const sec of SECS) {
+    const name = sec === "bins" ? t.binsT : lab("f_" + sec);
+    if (sec === "bins" && filled("bins")) fields.push([name, [$("f_binsM").value.trim() && $("f_binsM").value.trim() + " m", $("f_binsWhere").value.trim()].filter(Boolean).join(" · ")]);
+    else if (sec !== "bins" && filled(sec)) fields.push([name, $("f_" + sec).value.trim()]);
+    else if (std(sec)) fields.push([name, t.asDemoVal]);
+    else skipped.push(name);
+  }
+  if ($("f_custom").value.trim()) fields.push([lab("f_custom"), $("f_custom").value.trim()]);
+  if (skipped.length) fields.push([t.notNeeded, skipped.join(", ")]);
   const body = {kind, lang, name: $("f_you").value.trim(), method: $("f_method").value, contact: $("f_contact").value.trim(),
     changes: $("f_changes").value.trim(), fields, website: $("website").value};
   const btns = [$("wantBtn"), $("changesBtn")]; btns.forEach(b => b.disabled = true); setStatus(t.sending);
@@ -340,6 +444,12 @@ async function send(kind){
   } catch(e) { setStatus(t.err, "bad"); }
   btns.forEach(b => b.disabled = false);
 }
+function markCards(){ document.querySelectorAll(".sec[data-sec]").forEach(c => { const id = c.dataset.sec; if (!SECS.includes(id)) return; c.classList.toggle("off", !filled(id) && !std(id)); }); }
+document.querySelectorAll("[data-std]").forEach(cb => cb.addEventListener("change", () => { markCards(); if (shown) preview(); }));
+document.querySelectorAll(".sec textarea, .sec input").forEach(el => el.addEventListener("input", markCards));
+$("allDemo").addEventListener("click", () => { document.querySelectorAll("[data-std]").forEach(cb => cb.checked = true); markCards(); if (shown) preview(); });
+$("noDemo").addEventListener("click", () => { document.querySelectorAll("[data-std]").forEach(cb => cb.checked = false); markCards(); if (shown) preview(); });
+markCards();
 $("wantBtn").addEventListener("click", () => send("lead"));
 $("changesBtn").addEventListener("click", () => {
   if (!changesMode) { changesMode = true; $("changesBox").hidden = false; $("changesBtn").textContent = L[lang].sendChanges; $("f_changes").focus(); return; }
